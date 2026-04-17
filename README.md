@@ -8,7 +8,7 @@ Aplicación de gestión de cine y venta de entradas online construida con **Lara
 
 | Herramienta | Versión mínima |
 |---|---|
-| PHP | 8.2+ |
+| PHP | 8.4 (el `composer.lock` usa Symfony 8.x que requiere 8.4+) |
 | Composer | 2.x |
 | Node.js | 18+ |
 | MySQL | 8.0+ (o Docker) |
@@ -152,6 +152,9 @@ QUEUE_CONNECTION=sync
 SESSION_DRIVER=database
 CACHE_STORE=database
 ```
+
+> El proyecto incluye `nixpacks.toml` que fuerza PHP 8.4 en Railway automáticamente.
+> Si Railway detecta PHP 8.2 erróneamente, añade la variable de entorno `NIXPACKS_PHP_VERSION=8.4` en el panel.
 
 5. Tras el primer despliegue, ejecutar en el panel de Railway (o via CLI):
 
