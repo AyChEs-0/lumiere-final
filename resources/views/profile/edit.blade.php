@@ -1,29 +1,28 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Profile') }}
-        </h2>
-    </x-slot>
+@extends('layout')
+@section('title', 'El Meu Perfil')
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.update-profile-information-form')
-                </div>
-            </div>
+@section('content')
+<div class="container" style="max-width:800px;">
 
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.update-password-form')
-                </div>
-            </div>
+    <h1 class="page-title" style="margin-bottom:2rem;">El Meu Perfil</h1>
 
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.delete-user-form')
-                </div>
-            </div>
+    <div style="display:flex;flex-direction:column;gap:2rem;">
+
+        <div class="card">
+            <h2 class="card-header">Informació Personal</h2>
+            @include('profile.partials.update-profile-information-form')
         </div>
+
+        <div class="card">
+            <h2 class="card-header">Canviar Contrasenya</h2>
+            @include('profile.partials.update-password-form')
+        </div>
+
+        <div class="card" style="border-color:rgba(231,76,60,0.3);">
+            <h2 class="card-header" style="color:#e74c3c;">Zona de Perill</h2>
+            @include('profile.partials.delete-user-form')
+        </div>
+
     </div>
-</x-app-layout>
+</div>
+@endsection

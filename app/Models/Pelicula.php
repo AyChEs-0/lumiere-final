@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
 class Pelicula extends Model
@@ -20,23 +21,18 @@ class Pelicula extends Model
         'classificacio_edad',
         'trailer_url',
         'poster_path',
+        'activa',
     ];
 
     protected $appends = [
         'poster_url',
     ];
 
-    /**
-     * Una película puede tener muchas sesiones
-     */
     public function sesiones(): HasMany
     {
         return $this->hasMany(Sesion::class, 'fk_pelicula_id');
     }
 
-    /**
-     * Relación muchos a muchos con Categorías (tabla intermedia pelicula_categoria)
-     */
     public function categorias(): BelongsToMany
     {
         return $this->belongsToMany(
@@ -47,9 +43,6 @@ class Pelicula extends Model
         );
     }
 
-    /**
-     * Acceso directo a las reservas de una película saltando la tabla de sesiones
-     */
     public function reservas(): HasManyThrough
     {
         return $this->hasManyThrough(
@@ -60,19 +53,66 @@ class Pelicula extends Model
         );
     }
 
-    public function getPosterUrlAttribute(): string
+    /**
+     * Upcoming sessions (populated by the controller via setRelation).
+     * Falls back to a live query if the relation isn't pre-loaded.
+     */
+    public function getProximesSessionsAttribute(): Collection
     {
-        if ($this->poster_path) {
-            if (Str::startsWith($this->poster_path, ['http://', 'https://', 'data:'])) {
-                return $this->poster_path;
-            }
-
-            return asset($this->poster_path);
+        if ($this->relationLoaded('proximesSessions')) {
+            return $this->getRelation('proximesSessions');
         }
 
-        $title = trim((string) $this->titulo) ?: 'Lumiere';
+        return $this->sesiones()
+            ->where('fecha_hora', '>=', now())
+            ->with('sala.cine')
+            ->orderBy('fecha_hora')
+            ->get();
+    }
+
+    /**
+     * Resolves the poster URL with the following priority:
+     *  1. Local uploaded file (path stored without leading slash, e.g. uploads/peliculas/xxx.jpg)
+     *  2. Full external URL already stored (starts with http/https)
+     *  3. TMDB relative path (starts with /) → constructed via TMDB CDN
+     *  4. SVG placeholder based on the film title
+     */
+    public function getPosterUrlAttribute(): string
+    {
+        $path = $this->poster_path;
+
+        if (! $path) {
+            return $this->buildPlaceholder();
+        }
+
+        // Full external URL (including previously stored full TMDB URLs)
+        if (Str::startsWith($path, ['http://', 'https://', 'data:'])) {
+            return $path;
+        }
+
+        // TMDB relative path (e.g. /abc123.jpg)
+        if (Str::startsWith($path, '/')) {
+            $base = rtrim(config('services.movies_api.image_base_url', 'https://image.tmdb.org/t/p/w500'), '/');
+            return $base . $path;
+        }
+
+        // Local file stored in public/
+        return asset($path);
+    }
+
+    /**
+     * Returns the SVG placeholder data URI (also callable from Blade via onerror).
+     */
+    public function getPosterPlaceholder(): string
+    {
+        return $this->buildPlaceholder();
+    }
+
+    private function buildPlaceholder(): string
+    {
+        $title    = trim((string) $this->titulo) ?: 'Lumiere';
         $initials = Str::upper(Str::substr(preg_replace('/\s+/', '', $title) ?? $title, 0, 2));
-        $safeTitle = htmlspecialchars($title, ENT_QUOTES, 'UTF-8');
+        $safeTitle    = htmlspecialchars($title,    ENT_QUOTES, 'UTF-8');
         $safeInitials = htmlspecialchars($initials, ENT_QUOTES, 'UTF-8');
 
         $svg = <<<SVG
@@ -91,6 +131,6 @@ class Pelicula extends Model
 </svg>
 SVG;
 
-        return 'data:image/svg+xml;charset=UTF-8,'.rawurlencode($svg);
+        return 'data:image/svg+xml;charset=UTF-8,' . rawurlencode($svg);
     }
 }
