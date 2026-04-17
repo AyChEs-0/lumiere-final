@@ -30,3 +30,7 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+/lumiere
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
