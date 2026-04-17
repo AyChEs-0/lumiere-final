@@ -15,24 +15,32 @@ use Illuminate\Support\Str;
 class PeliculaController extends Controller
 {
     /**
-     * Lista todas las películas con filtros opcionales (día, cine, categoría, horario).
-     * Incluye también películas de TMDB que no están en la BD local,
-     * mostrándolas como "sin sesiones disponibles" al final de la cartelera.
+     * Cartelera pública: solo muestra películas activas con sesiones futuras.
+     * La BD local es la única fuente de verdad — no se consulta TMDB en runtime.
      */
     public function index(Request $request)
     {
-        // Datos para los filtros del sidebar (días con sesiones, cines y categorías disponibles)
+        // Datos para los filtros (solo días/cines con sesiones futuras reales)
         $filterDates = Sesion::selectRaw('DATE(fecha_hora) as dia')
+            ->where('fecha_hora', '>=', now())
             ->distinct()->orderBy('dia')->pluck('dia');
         $filterCines = Cine::orderBy('nombre')->get()->unique('nombre')->values();
         $filterCats  = Categoria::orderBy('nombre')->get();
 
-        // Empezamos con todas las películas y vamos añadiendo filtros si el usuario los usó
-        $query = Pelicula::with('categorias');
+        // Solo películas activas que tienen al menos una sesión futura
+        $query = Pelicula::with([
+            'categorias',
+            'sesiones' => fn($q) => $q->where('fecha_hora', '>=', now())
+                                      ->with('sala.cine')
+                                      ->orderBy('fecha_hora'),
+        ])
+        ->where('activa', true)
+        ->whereHas('sesiones', fn($q) => $q->where('fecha_hora', '>=', now()));
 
         if ($request->filled('dia')) {
             $query->whereHas('sesiones', fn($q) =>
-                $q->whereDate('fecha_hora', $request->dia)
+                $q->where('fecha_hora', '>=', now())
+                  ->whereDate('fecha_hora', $request->dia)
             );
         }
 
@@ -48,60 +56,20 @@ class PeliculaController extends Controller
             );
         }
 
-        $horaDesde = (int) $request->input('hora_desde', 0);
-        $horaHasta = (int) $request->input('hora_hasta', 23);
-        if ($request->has('hora_desde') || $request->has('hora_hasta')) {
-            if ($horaDesde > 0 || $horaHasta < 23) {
-                $query->whereHas('sesiones', fn($q) =>
-                    $q->whereTime('fecha_hora', '>=', sprintf('%02d:00', $horaDesde))
-                      ->whereTime('fecha_hora', '<=', sprintf('%02d:59', $horaHasta))
-                );
-            }
-        }
+        $peliculas = $query->get()
+            ->each(fn($p) => $p->setRelation(
+                'proximesSessions',
+                $p->sesiones->sortBy('fecha_hora')->values()
+            ));
 
-        $peliculas = $query->get();
-
-        // Películas de TMDB que NO están en la BD local (se muestran como "sin sesiones").
-        // Solo se cargan si no hay filtros activos para no mezclar resultados filtrados.
-        $tmdbMovies = [];
-        $externalApiEnabled = false;
-
-        try {
-            $moviesApi = app(DevsApiHubMovieService::class);
-            $externalApiEnabled = $moviesApi->isEnabled();
-
-            $hasFilters = $request->hasAny(['dia', 'cine_id', 'categoria_id'])
-                || $horaDesde > 0
-                || $horaHasta < 23;
-
-            if ($externalApiEnabled && ! $hasFilters) {
-                // Normalizamos títulos locales para comparar y evitar duplicados
-                $localTitles = $peliculas->pluck('titulo')
-                    ->map(fn($t) => mb_strtolower($t))
-                    ->toArray();
-
-                $tmdbMovies = collect($moviesApi->getByLimit(20))
-                    ->filter(fn($m) => ! in_array(mb_strtolower($m['title']), $localTitles))
-                    ->values()
-                    ->all();
-            }
-        } catch (\Throwable $e) {
-            $tmdbMovies = [];
-            $externalApiEnabled = false;
-        }
-
-        $filtered = $request->hasAny(['dia', 'cine_id', 'categoria_id'])
-            || $horaDesde > 0
-            || $horaHasta < 23;
+        $filtered = $request->hasAny(['dia', 'cine_id', 'categoria_id']);
 
         return view('peliculas.index', compact(
             'peliculas',
             'filterDates',
             'filterCines',
             'filterCats',
-            'filtered',
-            'tmdbMovies',
-            'externalApiEnabled'
+            'filtered'
         ));
     }
 
@@ -286,31 +254,28 @@ class PeliculaController extends Controller
 
         DB::transaction(function () use ($externalMovies, &$created, &$updated) {
             foreach ($externalMovies as $ext) {
-                // Usamos título como clave funcional para evitar duplicados al sincronizar.
-                $pelicula = Pelicula::where('titulo', $ext['title'])->first();
+                $tmdbId = $ext['id'] ?? null;
+                $key = $tmdbId ? ['tmdb_id' => $tmdbId] : ['titulo' => $ext['title']];
 
-                if (! $pelicula) {
-                    $pelicula = new Pelicula();
-                    $pelicula->titulo = $ext['title'];
+                $yearLabel = ($ext['year'] ?? null) ? ' [Any '.$ext['year'].']' : '';
+                $desc = trim((string) ($ext['description'] ?? ''));
+
+                $pelicula = Pelicula::updateOrCreate($key, [
+                    'tmdb_id'            => $tmdbId,
+                    'titulo'             => $ext['title'],
+                    'sinopsis'           => $desc.$yearLabel ?: null,
+                    'poster_path'        => $ext['poster_path'] ?? null,
+                    'activa'             => true,
+                ]);
+
+                if ($pelicula->wasRecentlyCreated) {
                     $created++;
                 } else {
                     $updated++;
                 }
 
-                $yearLabel = $ext['year'] ? ' [Any '.$ext['year'].']' : '';
-                $desc = trim((string) ($ext['description'] ?? ''));
-                $pelicula->sinopsis = $desc.$yearLabel;
-                $pelicula->duracion_min = $pelicula->duracion_min ?: 120;
-                $pelicula->classificacio_edad = $pelicula->classificacio_edad ?: 'TP';
-                $pelicula->poster_path = $ext['image_url'] ?: $pelicula->poster_path;
-                $pelicula->save();
-
                 if (! empty($ext['genre'])) {
-                    // Creamos categoría si no existe y la asociamos sin pisar relaciones previas.
-                    $categoria = Categoria::firstOrCreate([
-                        'nombre' => $ext['genre'],
-                    ]);
-
+                    $categoria = Categoria::firstOrCreate(['nombre' => $ext['genre']]);
                     $pelicula->categorias()->syncWithoutDetaching([$categoria->id]);
                 }
             }

@@ -25,6 +25,8 @@ class Reserva extends Model
         'butaques_seleccionades',
         'total_pagat',
         'estat',
+        'nom_client',
+        'email_client',
     ];
 
     /**

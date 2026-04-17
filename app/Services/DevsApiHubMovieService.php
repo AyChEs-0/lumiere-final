@@ -321,13 +321,14 @@ class DevsApiHubMovieService
         $imageUrl = $posterPath !== '' ? $this->imageBase.$posterPath : '';
 
         return [
-            'id' => (int) $movie['id'],
-            'title' => (string) $movie['title'],
+            'id'          => (int) $movie['id'],
+            'title'       => (string) $movie['title'],
             'description' => (string) ($movie['overview'] ?? ''),
-            'year' => $year,
-            'image_url' => $imageUrl,
-            'genre' => $genres,
-            'stars' => isset($movie['vote_average']) ? round(((float) $movie['vote_average']) / 2, 1) : null,
+            'year'        => $year,
+            'poster_path' => $posterPath !== '' ? $posterPath : null,
+            'image_url'   => $imageUrl,
+            'genre'       => $genres,
+            'stars'       => isset($movie['vote_average']) ? round(((float) $movie['vote_average']) / 2, 1) : null,
         ];
     }
 }

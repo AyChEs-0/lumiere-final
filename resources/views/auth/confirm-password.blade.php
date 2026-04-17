@@ -1,27 +1,31 @@
-<x-guest-layout>
-    <div class="mb-4 text-sm text-gray-600">
-        {{ __('This is a secure area of the application. Please confirm your password before continuing.') }}
+@extends('layout')
+@section('title', 'Confirma la Contrasenya')
+
+@section('content')
+<div style="min-height:70vh;display:flex;align-items:center;justify-content:center;padding:3rem 1rem;">
+    <div style="width:100%;max-width:420px;">
+
+        <div style="background:var(--color-bg-secondary);border:1px solid var(--border-subtle);border-radius:12px;padding:2rem;">
+            <p style="color:var(--color-text-secondary);font-size:0.875rem;margin-bottom:1.5rem;">
+                Àrea segura. Confirma la teva contrasenya per continuar.
+            </p>
+
+            <form method="POST" action="{{ route('password.confirm') }}">
+                @csrf
+                <div class="form-group">
+                    <label for="password" class="form-label">Contrasenya</label>
+                    <input id="password" type="password" name="password"
+                           class="form-input" required autocomplete="current-password">
+                    @error('password')
+                        <p class="form-error">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width:100%;text-align:center;">
+                    Confirmar
+                </button>
+            </form>
+        </div>
     </div>
-
-    <form method="POST" action="{{ route('password.confirm') }}">
-        @csrf
-
-        <!-- Password -->
-        <div>
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-        <div class="flex justify-end mt-4">
-            <x-primary-button>
-                {{ __('Confirm') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+</div>
+@endsection

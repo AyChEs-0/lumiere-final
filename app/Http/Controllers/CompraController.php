@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ReservaConfirmada;
 use App\Models\Reserva;
 use App\Models\SeatLock;
 use App\Models\Sesion;
@@ -283,6 +284,8 @@ class CompraController extends Controller
             'butaques_seleccionades' => implode(', ', $compra['butaques']),
             'total_pagat'            => $compra['total'],
             'estat'                  => 'pagat',
+            'nom_client'             => $request->nom,
+            'email_client'           => $request->email,
         ]);
 
         // Si el usuario quiere guardar la tarjeta, almacenamos los últimos 4 dígitos enmascarados
@@ -300,6 +303,15 @@ class CompraController extends Controller
             ->when($myUserId, fn($q) => $q->where('user_id', $myUserId))
             ->when(! $myUserId, fn($q) => $q->where('session_token', $myToken))
             ->delete();
+
+        // Enviamos email de confirmación en cola (no bloquea la respuesta)
+        try {
+            $reserva->load('sesion.pelicula', 'sesion.sala.cine');
+            Mail::to($request->email)
+                ->queue(new ReservaConfirmada($reserva, $request->nom, $request->email));
+        } catch (\Throwable) {
+            // El email es no crítico — si falla, la compra sigue confirmada
+        }
 
         // Guardamos los datos de confirmación para mostrarlos en la pantalla de éxito
         session([
