@@ -254,31 +254,28 @@ class PeliculaController extends Controller
 
         DB::transaction(function () use ($externalMovies, &$created, &$updated) {
             foreach ($externalMovies as $ext) {
-                // Usamos título como clave funcional para evitar duplicados al sincronizar.
-                $pelicula = Pelicula::where('titulo', $ext['title'])->first();
+                $tmdbId = $ext['id'] ?? null;
+                $key = $tmdbId ? ['tmdb_id' => $tmdbId] : ['titulo' => $ext['title']];
 
-                if (! $pelicula) {
-                    $pelicula = new Pelicula();
-                    $pelicula->titulo = $ext['title'];
+                $yearLabel = ($ext['year'] ?? null) ? ' [Any '.$ext['year'].']' : '';
+                $desc = trim((string) ($ext['description'] ?? ''));
+
+                $pelicula = Pelicula::updateOrCreate($key, [
+                    'tmdb_id'            => $tmdbId,
+                    'titulo'             => $ext['title'],
+                    'sinopsis'           => $desc.$yearLabel ?: null,
+                    'poster_path'        => $ext['poster_path'] ?? null,
+                    'activa'             => true,
+                ]);
+
+                if ($pelicula->wasRecentlyCreated) {
                     $created++;
                 } else {
                     $updated++;
                 }
 
-                $yearLabel = $ext['year'] ? ' [Any '.$ext['year'].']' : '';
-                $desc = trim((string) ($ext['description'] ?? ''));
-                $pelicula->sinopsis = $desc.$yearLabel;
-                $pelicula->duracion_min = $pelicula->duracion_min ?: 120;
-                $pelicula->classificacio_edad = $pelicula->classificacio_edad ?: 'TP';
-                $pelicula->poster_path = $ext['image_url'] ?: $pelicula->poster_path;
-                $pelicula->save();
-
                 if (! empty($ext['genre'])) {
-                    // Creamos categoría si no existe y la asociamos sin pisar relaciones previas.
-                    $categoria = Categoria::firstOrCreate([
-                        'nombre' => $ext['genre'],
-                    ]);
-
+                    $categoria = Categoria::firstOrCreate(['nombre' => $ext['genre']]);
                     $pelicula->categorias()->syncWithoutDetaching([$categoria->id]);
                 }
             }
