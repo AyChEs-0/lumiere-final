@@ -25,19 +25,27 @@ class PeliculaSeeder extends Seeder
         $movies = $service->getNowPlaying();
 
         foreach ($movies as $ext) {
-            $pelicula = Pelicula::updateOrCreate(
-                ['titulo' => $ext['title']],
-                [
-                    'sinopsis'           => $ext['description'] ?? null,
-                    'duracion_min'       => $ext['runtime']    ?? 120,
-                    'classificacio_edad' => $ext['cert']       ?? 'TP',
-                    'poster_path'        => $ext['image_url']  ?? null,
-                    'activa'             => true,
-                ]
-            );
+            $tmdbId = $ext['id'] ?? null;
 
+            $key = $tmdbId ? ['tmdb_id' => $tmdbId] : ['titulo' => $ext['title']];
+
+            $pelicula = Pelicula::updateOrCreate($key, [
+                'tmdb_id'            => $tmdbId,
+                'titulo'             => $ext['title'],
+                'sinopsis'           => $ext['description'] ?? null,
+                'duracion_min'       => $ext['runtime']    ?? 120,
+                'classificacio_edad' => $ext['cert']       ?? null,
+                'poster_path'        => $ext['poster_path'] ?? null,
+                'activa'             => true,
+            ]);
+
+            $genreNames = [];
             if (! empty($ext['genre'])) {
-                $categoria = Categoria::firstOrCreate(['nombre' => $ext['genre']]);
+                $genreNames = array_map('trim', explode(',', $ext['genre']));
+            }
+
+            foreach (array_filter($genreNames) as $nombre) {
+                $categoria = Categoria::firstOrCreate(['nombre' => $nombre]);
                 $pelicula->categorias()->syncWithoutDetaching([$categoria->id]);
             }
         }
