@@ -1,19 +1,20 @@
 import { useState, useEffect, useCallback } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import SlideProgress    from './components/SlideProgress'
-import TitleSlide       from './slides/TitleSlide'
-import AboutSlide       from './slides/AboutSlide'
-import FeaturesSlide    from './slides/FeaturesSlide'
-import CarteleraSlide   from './slides/CarteleraSlide'
-import FlujoSlide       from './slides/FlujoSlide'
-import DecisionesSlide  from './slides/DecisionesSlide'
-import ArquitecturaSlide from './slides/ArquitecturaSlide'
-import TechSlide        from './slides/TechSlide'
-import ReflexionSlide   from './slides/ReflexionSlide'
-import FinalSlide       from './slides/FinalSlide'
+import SlideProgress      from './components/SlideProgress'
+import TitleSlide         from './slides/TitleSlide'
+import AboutSlide         from './slides/AboutSlide'
+import PlanificacionSlide from './slides/PlanificacionSlide'
+import FeaturesSlide      from './slides/FeaturesSlide'
+import CarteleraSlide     from './slides/CarteleraSlide'
+import FlujoSlide         from './slides/FlujoSlide'
+import DecisionesSlide    from './slides/DecisionesSlide'
+import ArquitecturaSlide  from './slides/ArquitecturaSlide'
+import TechSlide          from './slides/TechSlide'
+import ReflexionSlide     from './slides/ReflexionSlide'
+import FinalSlide         from './slides/FinalSlide'
 
 const SLIDES = [
-  TitleSlide, AboutSlide, FeaturesSlide, CarteleraSlide,
+  TitleSlide, AboutSlide, PlanificacionSlide, FeaturesSlide, CarteleraSlide,
   FlujoSlide, DecisionesSlide, ArquitecturaSlide,
   TechSlide, ReflexionSlide, FinalSlide,
 ]
