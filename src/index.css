@@ -3,77 +3,81 @@
 @tailwind utilities;
 
 @layer base {
-  html {
-    scroll-behavior: smooth;
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html, body, #root {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
   }
+
   body {
-    background: linear-gradient(160deg, #111111 0%, #1a0a0a 50%, #120000 100%);
-    background-attachment: fixed;
+    background: #111111;
     color: #ffffff;
     font-family: 'Figtree', sans-serif;
-    overflow-x: hidden;
+    user-select: none;
   }
-  ::selection {
-    background: rgba(212, 24, 61, 0.4);
-  }
+
+  ::selection { background: rgba(212, 24, 61, 0.35); }
 }
 
 @layer components {
+  .presentation {
+    @apply relative w-screen h-screen overflow-hidden;
+    background: linear-gradient(160deg, #111111 0%, #1a0a0a 55%, #120000 100%);
+  }
+
+  .slide {
+    @apply absolute inset-0 w-full h-full flex flex-col;
+    overflow: hidden;
+  }
+
   .glass {
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    background: rgba(25, 10, 10, 0.4);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    background: rgba(25, 10, 10, 0.45);
     border: 1px solid rgba(212, 24, 61, 0.18);
   }
 
   .glass-dark {
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    background: rgba(10, 5, 5, 0.7);
-    border: 1px solid rgba(212, 24, 61, 0.12);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    background: rgba(8, 3, 3, 0.75);
+    border: 1px solid rgba(212, 24, 61, 0.1);
   }
 
-  .btn-primary {
-    @apply px-8 py-3 rounded-full bg-cinema-red text-white font-bold uppercase tracking-cinema text-sm
-           transition-all duration-300 hover:shadow-red-glow hover:-translate-y-0.5 active:scale-95;
+  .slide-label {
+    @apply text-xs font-black uppercase tracking-[0.2em] text-cinema-red;
   }
 
-  .btn-ghost {
-    @apply px-8 py-3 rounded-full border-2 border-cinema-maroon text-white font-bold uppercase tracking-cinema text-sm
-           transition-all duration-300 hover:border-cinema-red hover:shadow-red-glow hover:-translate-y-0.5 active:scale-95;
+  .slide-title {
+    @apply text-4xl md:text-5xl font-black uppercase leading-none tracking-[0.06em] text-white;
   }
 
-  .section-title {
-    @apply text-3xl md:text-4xl font-black uppercase tracking-cinema text-white;
-  }
-
-  .nav-link {
-    @apply relative text-sm font-bold uppercase tracking-cinema text-white/70 hover:text-white
-           transition-colors duration-300 py-1;
-  }
-
-  .nav-link::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: #d4183d;
-    transition: width 0.25s ease;
-  }
-
-  .nav-link:hover::after {
-    width: 100%;
+  .slide-body {
+    @apply text-sm md:text-base text-white/55 leading-relaxed;
   }
 
   .red-line {
-    @apply block w-12 h-1 bg-cinema-red rounded-full mb-4;
+    @apply block w-10 h-[3px] bg-cinema-red rounded-full mb-3;
+  }
+
+  .btn-primary {
+    @apply px-7 py-2.5 rounded-full bg-cinema-red text-white font-bold uppercase
+           tracking-[0.1em] text-xs transition-all duration-300
+           hover:shadow-[0_4px_20px_rgba(212,24,61,0.45)] hover:-translate-y-0.5;
+  }
+
+  .btn-ghost {
+    @apply px-7 py-2.5 rounded-full border-2 border-cinema-maroon text-white font-bold uppercase
+           tracking-[0.1em] text-xs transition-all duration-300
+           hover:border-cinema-red hover:shadow-[0_4px_20px_rgba(212,24,61,0.3)] hover:-translate-y-0.5;
   }
 }
 
 /* Scrollbar */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: #111; }
-::-webkit-scrollbar-thumb { background: #800000; border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: #d4183d; }
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #800000; border-radius: 2px; }
