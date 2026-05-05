@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import SlideProgress      from './components/SlideProgress'
 import TitleSlide         from './slides/TitleSlide'
+import PropositSlide      from './slides/PropositSlide'
 import AboutSlide         from './slides/AboutSlide'
 import PlanificacionSlide from './slides/PlanificacionSlide'
 import FeaturesSlide      from './slides/FeaturesSlide'
@@ -14,7 +15,7 @@ import ReflexionSlide     from './slides/ReflexionSlide'
 import FinalSlide         from './slides/FinalSlide'
 
 const SLIDES = [
-  TitleSlide, AboutSlide, PlanificacionSlide, FeaturesSlide, CarteleraSlide,
+  TitleSlide, PropositSlide, AboutSlide, PlanificacionSlide, FeaturesSlide, CarteleraSlide,
   FlujoSlide, DecisionesSlide, ArquitecturaSlide,
   TechSlide, ReflexionSlide, FinalSlide,
 ]
