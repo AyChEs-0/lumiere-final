@@ -1,62 +1,82 @@
 import { motion } from 'framer-motion'
+import { fadeUp, drawLine, scaleIn, ease } from '../utils/motion'
 
-const stats = [
-  { value: '3',     label: 'Roles de usuario' },
-  { value: '∞',     label: 'Sesiones por sala' },
-  { value: '100%',  label: 'Online' },
-  { value: 'REST',  label: 'API externa' },
+const team = [
+  {
+    initials: 'AC',
+    name: 'Ayman Charoui',
+    role: 'Arquitecto de Software & Backend Core',
+    desc: 'Lógica de concurrencia, checkout, servicios API y UX/UI',
+    color: '#d4183d',
+  },
+  {
+    initials: 'DG',
+    name: 'Danna Guevara',
+    role: 'DevOps, Infraestructura & Documentación',
+    desc: 'Docker, Railway, migración GitHub, memoria del proyecto',
+    color: '#9333ea',
+  },
+  {
+    initials: 'IA',
+    name: 'Ismael Achamrouk',
+    role: 'QA Testing, Accesos & Soporte',
+    desc: 'Laravel Breeze, middlewares IsAdmin/CanManage, PHPUnit',
+    color: '#0891b2',
+  },
 ]
-
-const up = (delay = 0) => ({
-  initial: { opacity: 0, y: 30 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.6, delay, ease: [0.4, 0, 0.2, 1] },
-})
 
 export default function AboutSlide() {
   return (
-    <div className="w-full h-full flex items-center justify-center px-12 md:px-20">
-      <div className="w-full max-w-6xl grid md:grid-cols-2 gap-16 items-center">
+    <div className="w-full h-full flex items-center px-[8vw] py-14">
+      <div className="w-full max-w-6xl mx-auto grid md:grid-cols-[1fr_1px_1fr] gap-0 items-center">
 
         {/* Left */}
-        <div>
-          <motion.span {...up(0.1)} className="red-line" />
-          <motion.p   {...up(0.1)} className="slide-label mb-4">¿Qué es?</motion.p>
-          <motion.h2  {...up(0.2)} className="slide-title mb-6">
-            Gestión cinematográfica completa
-          </motion.h2>
-          <motion.p   {...up(0.35)} className="slide-body mb-8">
-            Cine Lumière es una aplicación web full-stack que permite gestionar cines,
-            programar sesiones, ofrecer una cartelera dinámica actualizada desde una API
-            externa y procesar la compra de entradas de extremo a extremo.
+        <div className="pr-14">
+          <motion.span {...drawLine(0.1)} className="red-bar" />
+          <motion.p {...fadeUp(0.1)} className="label mb-4">¿Qué es?</motion.p>
+          <div className="overflow-hidden mb-1">
+            <motion.h2 initial={{ y: '110%' }} animate={{ y: 0 }}
+              transition={{ duration: 0.72, delay: 0.2, ease }} className="s-title">
+              Gestión cinematográfica
+            </motion.h2>
+          </div>
+          <div className="overflow-hidden mb-8">
+            <motion.h2 initial={{ y: '110%' }} animate={{ y: 0 }}
+              transition={{ duration: 0.72, delay: 0.3, ease }} className="s-title text-cinema-red">
+              de extremo a extremo.
+            </motion.h2>
+          </div>
+          <motion.p {...fadeUp(0.45)} className="s-body mb-4">
+            Cine Lumière es una plataforma web full-stack para la gestión integral de cines: cartelera sincronizada con TMDB, sistema de reservas con control de concurrencia ACID y checkout en 3 pasos con validación real de pagos.
           </motion.p>
-          <motion.p {...up(0.45)} className="slide-body">
-            Construida con Laravel + MySQL en el backend y Tailwind CSS en el frontend,
-            con autenticación, control de roles y un flujo de compra con bloqueo
-            temporal de butacas en tiempo real.
+          <motion.p {...fadeUp(0.55)} className="s-body">
+            Construida sobre Laravel 12, MySQL 8.4 y Tailwind CSS, con Docker para el entorno de desarrollo y Railway para el despliegue en producción.
           </motion.p>
         </div>
 
-        {/* Right — stats */}
-        <motion.div
-          className="grid grid-cols-2 gap-4"
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.7, delay: 0.3, ease: [0.4, 0, 0.2, 1] }}
-        >
-          {stats.map(({ value, label }, i) => (
-            <motion.div
-              key={label}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.4 + i * 0.1 }}
-              className="glass rounded-2xl p-8 flex flex-col gap-2"
-            >
-              <span className="text-5xl font-black text-cinema-red leading-none">{value}</span>
-              <span className="text-xs uppercase tracking-[0.15em] text-white/40">{label}</span>
+        {/* Divider */}
+        <motion.div className="hidden md:block h-64 w-px bg-gradient-to-b from-transparent via-cinema-red/25 to-transparent origin-top"
+          initial={{ scaleY: 0 }} animate={{ scaleY: 1 }}
+          transition={{ duration: 0.8, delay: 0.5, ease }} />
+
+        {/* Right — team */}
+        <div className="pl-14 flex flex-col gap-3">
+          <motion.p {...fadeUp(0.3)} className="label mb-2">Equipo — Grupo 3</motion.p>
+          {team.map((m, i) => (
+            <motion.div key={m.name} {...scaleIn(0.35 + i * 0.1)}
+              whileHover={{ y: -3, transition: { duration: 0.2 } }}
+              className="glass rounded-xl p-4 flex items-center gap-4">
+              <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 text-white font-black text-sm"
+                style={{ background: `${m.color}25`, border: `1px solid ${m.color}40`, color: m.color }}>
+                {m.initials}
+              </div>
+              <div className="min-w-0">
+                <p className="text-xs font-black text-white truncate">{m.name}</p>
+                <p className="text-[10px] text-white/40 leading-snug mt-0.5">{m.desc}</p>
+              </div>
             </motion.div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </div>
   )
