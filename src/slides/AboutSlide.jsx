@@ -1,62 +1,99 @@
 import { motion } from 'framer-motion'
+import { useEffect, useState } from 'react'
+import { fadeUp, drawLine, scaleIn, ease } from '../utils/motion'
+
+function Counter({ to, suffix = '', delay = 0 }) {
+  const [val, setVal] = useState(0)
+  useEffect(() => {
+    const t = setTimeout(() => {
+      const start = performance.now()
+      const dur = 1200
+      const tick = (now) => {
+        const p = Math.min((now - start) / dur, 1)
+        const e = 1 - Math.pow(1 - p, 3)
+        setVal(Math.round(e * to))
+        if (p < 1) requestAnimationFrame(tick)
+      }
+      requestAnimationFrame(tick)
+    }, delay)
+    return () => clearTimeout(t)
+  }, [to, delay])
+  return <>{val}{suffix}</>
+}
 
 const stats = [
-  { value: '3',     label: 'Roles de usuario' },
-  { value: '∞',     label: 'Sesiones por sala' },
-  { value: '100%',  label: 'Online' },
-  { value: 'REST',  label: 'API externa' },
+  { display: <Counter to={3} delay={400} />,    label: 'Roles de usuario',    sub: 'Admin · Taquilla · Cliente' },
+  { display: <Counter to={100} suffix="%" delay={500} />, label: 'Online',    sub: 'Sin app — solo navegador' },
+  { display: <Counter to={3} delay={600} />,    label: 'Pasos de compra',     sub: 'Sesión · Butaca · Pago' },
+  { display: 'API',                              label: 'Integración externa', sub: 'Cartelera en tiempo real' },
 ]
-
-const up = (delay = 0) => ({
-  initial: { opacity: 0, y: 30 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.6, delay, ease: [0.4, 0, 0.2, 1] },
-})
 
 export default function AboutSlide() {
   return (
-    <div className="w-full h-full flex items-center justify-center px-12 md:px-20">
-      <div className="w-full max-w-6xl grid md:grid-cols-2 gap-16 items-center">
+    <div className="w-full h-full flex items-center px-[8vw] py-16">
+      <div className="w-full max-w-6xl mx-auto grid md:grid-cols-[1fr_1px_1fr] gap-0 items-center">
 
-        {/* Left */}
-        <div>
-          <motion.span {...up(0.1)} className="red-line" />
-          <motion.p   {...up(0.1)} className="slide-label mb-4">¿Qué es?</motion.p>
-          <motion.h2  {...up(0.2)} className="slide-title mb-6">
-            Gestión cinematográfica completa
-          </motion.h2>
-          <motion.p   {...up(0.35)} className="slide-body mb-8">
-            Cine Lumière es una aplicación web full-stack que permite gestionar cines,
-            programar sesiones, ofrecer una cartelera dinámica actualizada desde una API
-            externa y procesar la compra de entradas de extremo a extremo.
+        {/* Left — text */}
+        <div className="pr-16">
+          <motion.span {...drawLine(0.1)} className="red-bar" />
+          <motion.p   {...fadeUp(0.1)} className="label mb-4">¿Qué es?</motion.p>
+
+          <div className="overflow-hidden mb-2">
+            <motion.h2
+              initial={{ y: '110%' }} animate={{ y: 0 }}
+              transition={{ duration: 0.72, delay: 0.2, ease }}
+              className="s-title"
+            >
+              Gestión cinematográfica
+            </motion.h2>
+          </div>
+          <div className="overflow-hidden mb-8">
+            <motion.h2
+              initial={{ y: '110%' }} animate={{ y: 0 }}
+              transition={{ duration: 0.72, delay: 0.3, ease }}
+              className="s-title text-cinema-red"
+            >
+              de extremo a extremo.
+            </motion.h2>
+          </div>
+
+          <motion.p {...fadeUp(0.45)} className="s-body mb-5">
+            Cine Lumière es una aplicación web full-stack que gestiona cines,
+            salas y sesiones, ofrece cartelera dinámica desde una API externa
+            y procesa la compra de entradas de principio a fin.
           </motion.p>
-          <motion.p {...up(0.45)} className="slide-body">
-            Construida con Laravel + MySQL en el backend y Tailwind CSS en el frontend,
-            con autenticación, control de roles y un flujo de compra con bloqueo
-            temporal de butacas en tiempo real.
+          <motion.p {...fadeUp(0.55)} className="s-body">
+            Construida con Laravel 11 y MySQL, con autenticación por roles,
+            bloqueo temporal de butacas y flujo de compra en tres pasos.
           </motion.p>
         </div>
 
-        {/* Right — stats */}
+        {/* Vertical divider */}
         <motion.div
-          className="grid grid-cols-2 gap-4"
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.7, delay: 0.3, ease: [0.4, 0, 0.2, 1] }}
-        >
-          {stats.map(({ value, label }, i) => (
+          className="hidden md:block h-64 w-px bg-gradient-to-b from-transparent via-cinema-red/25 to-transparent origin-top"
+          initial={{ scaleY: 0 }}
+          animate={{ scaleY: 1 }}
+          transition={{ duration: 0.8, delay: 0.5, ease }}
+        />
+
+        {/* Right — stats */}
+        <div className="pl-16 grid grid-cols-2 gap-4">
+          {stats.map(({ display, label, sub }, i) => (
             <motion.div
               key={label}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.4 + i * 0.1 }}
-              className="glass rounded-2xl p-8 flex flex-col gap-2"
+              {...scaleIn(0.35 + i * 0.1)}
+              whileHover={{ y: -4, transition: { duration: 0.25 } }}
+              className="glass rounded-2xl p-6 flex flex-col gap-1"
             >
-              <span className="text-5xl font-black text-cinema-red leading-none">{value}</span>
-              <span className="text-xs uppercase tracking-[0.15em] text-white/40">{label}</span>
+              <span className="text-[clamp(2.2rem,4vw,3.2rem)] font-black text-cinema-red leading-none tabular-nums">
+                {display}
+              </span>
+              <span className="text-[11px] font-black uppercase tracking-[0.14em] text-white mt-2">{label}</span>
+              <span className="text-[10px] text-white/30">{sub}</span>
             </motion.div>
           ))}
-        </motion.div>
+        </div>
+
       </div>
     </div>
   )

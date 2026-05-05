@@ -14,9 +14,10 @@
   }
 
   body {
-    background: #111111;
+    background: #0e0e0e;
     color: #ffffff;
     font-family: 'Figtree', sans-serif;
+    -webkit-font-smoothing: antialiased;
     user-select: none;
   }
 
@@ -26,7 +27,7 @@
 @layer components {
   .presentation {
     @apply relative w-screen h-screen overflow-hidden;
-    background: linear-gradient(160deg, #111111 0%, #1a0a0a 55%, #120000 100%);
+    background: linear-gradient(155deg, #111111 0%, #160808 55%, #100000 100%);
   }
 
   .slide {
@@ -34,50 +35,74 @@
     overflow: hidden;
   }
 
+  /* Film grain overlay — subtle noise texture */
+  .film-grain::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 10;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n' x='0' y='0'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 200px 200px;
+  }
+
   .glass {
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
-    background: rgba(25, 10, 10, 0.45);
-    border: 1px solid rgba(212, 24, 61, 0.18);
+    background: rgba(22, 8, 8, 0.5);
+    border: 1px solid rgba(212, 24, 61, 0.14);
   }
 
-  .glass-dark {
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    background: rgba(8, 3, 3, 0.75);
+  .glass-strong {
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    background: rgba(10, 3, 3, 0.8);
     border: 1px solid rgba(212, 24, 61, 0.1);
   }
 
-  .slide-label {
-    @apply text-xs font-black uppercase tracking-[0.2em] text-cinema-red;
+  /* Label — small uppercase red text */
+  .label {
+    @apply text-[10px] font-black uppercase tracking-[0.22em] text-cinema-red;
   }
 
-  .slide-title {
-    @apply text-4xl md:text-5xl font-black uppercase leading-none tracking-[0.06em] text-white;
+  /* Section title */
+  .s-title {
+    @apply text-[clamp(2rem,4vw,3.25rem)] font-black uppercase leading-none tracking-[0.04em] text-white;
   }
 
-  .slide-body {
-    @apply text-sm md:text-base text-white/55 leading-relaxed;
+  /* Body text */
+  .s-body {
+    @apply text-[clamp(0.8rem,1.2vw,1rem)] text-white/50 leading-relaxed;
   }
 
-  .red-line {
-    @apply block w-10 h-[3px] bg-cinema-red rounded-full mb-3;
+  .red-bar {
+    @apply block h-[3px] bg-cinema-red rounded-full mb-3;
+    width: 2.5rem;
   }
 
   .btn-primary {
-    @apply px-7 py-2.5 rounded-full bg-cinema-red text-white font-bold uppercase
-           tracking-[0.1em] text-xs transition-all duration-300
-           hover:shadow-[0_4px_20px_rgba(212,24,61,0.45)] hover:-translate-y-0.5;
+    @apply inline-flex items-center gap-2 px-7 py-2.5 rounded-full bg-cinema-red text-white
+           font-black uppercase tracking-[0.1em] text-xs
+           transition-all duration-300 hover:shadow-[0_4px_24px_rgba(212,24,61,0.5)]
+           hover:-translate-y-0.5 active:scale-95;
   }
 
   .btn-ghost {
-    @apply px-7 py-2.5 rounded-full border-2 border-cinema-maroon text-white font-bold uppercase
-           tracking-[0.1em] text-xs transition-all duration-300
-           hover:border-cinema-red hover:shadow-[0_4px_20px_rgba(212,24,61,0.3)] hover:-translate-y-0.5;
+    @apply inline-flex items-center gap-2 px-7 py-2.5 rounded-full border-2
+           border-cinema-maroon text-white font-black uppercase tracking-[0.1em] text-xs
+           transition-all duration-300 hover:border-cinema-red
+           hover:shadow-[0_4px_18px_rgba(212,24,61,0.3)]
+           hover:-translate-y-0.5 active:scale-95;
+  }
+
+  /* Divider line */
+  .h-divider {
+    @apply block h-px w-full bg-gradient-to-r from-transparent via-cinema-red/20 to-transparent;
   }
 }
 
-/* Scrollbar */
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: #800000; border-radius: 2px; }
