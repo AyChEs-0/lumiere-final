@@ -67,14 +67,6 @@ export default function TechSlide() {
             </motion.div>
           ))}
         </motion.div>
-
-        <motion.div {...fadeUp(0.9)} className="mt-8 flex flex-wrap gap-2">
-          {['MVC + Services Pattern', 'ACID Transactions', 'Graceful Degradation', 'HMAC-SHA256', 'Luhn Validation', 'CI/CD Railway'].map(tag => (
-            <span key={tag} className="text-[9px] font-bold uppercase tracking-[0.14em] text-white/18 border border-white/6 rounded-full px-3 py-1">
-              {tag}
-            </span>
-          ))}
-        </motion.div>
       </div>
     </div>
   )
