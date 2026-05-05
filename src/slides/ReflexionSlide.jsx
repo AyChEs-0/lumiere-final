@@ -1,24 +1,18 @@
 import { motion } from 'framer-motion'
 import { fadeUp, drawLine, staggerContainer, staggerItem, ease } from '../utils/motion'
 
-const pros = [
-  'Centralizar lógica en servicios (TMDB, SeatLock, PurchaseService) limpió los controladores enormemente.',
-  'Docker homogeneizó PHP 8.4 y MySQL 8.4 entre los 3 miembros · Cero problemas de compatibilidad.',
-  'Inspirarse en OCine y Yelmo marcó el rumbo del UX desde el principio.',
+const encerts = [
+  "Documentar les decisions en el moment en què es prenien va fer que la memòria reflectís el procés real, no una versió idealment reconstruïda",
+  "La tutoria de seguiment, tot i ser incòmoda, va ser el punt d'inflexió que va millorar la qualitat del producte final",
+  "Separar responsabilitats clares des del principi va evitar duplicació de feina i va facilitar la resolució de conflictes",
+  "El tauler Trello com a eina de comunicació passiva va reduir la necessitat de reunions innecessàries",
 ]
 
-const cons = [
-  'Implementar Stripe real con Webhooks en lugar del simulador actual de validación de tarjeta.',
-  'Automatizar la ejecución de PHPUnit en el pipeline de Railway antes de cada deploy.',
-  'Políticas RGPD: automatizar retención y borrado de datos físicos e históricos.',
-  'Asincronía completa: Queues de Laravel para emails transaccionales en producción.',
-]
-
-const future = [
-  { text: 'Pasarela de pago real con Stripe y Webhooks' },
-  { text: 'SMTP real en producción para emails transaccionales' },
-  { text: 'Generación de PDF con ticket QR adjunto descargable' },
-  { text: 'Pipeline CI/CD con PHPUnit antes de cada deploy a Railway' },
+const millores = [
+  "Hauríem connectat cada commit de Git a una issue de Trello des del primer dia, no a partir de la setmana 21",
+  "La seguretat s'hauria d'haver planificat com a requisit des del disseny, no com a correcció a mitja execució",
+  "Hauríem fet retrospectives setmanals formals des de l'inici per detectar problemes de gestió més aviat",
+  "La documentació final va ser molt extensa per acumular-se — amb metodologia incremental s'hauria distribuït millor",
 ]
 
 export default function ReflexionSlide() {
@@ -28,17 +22,17 @@ export default function ReflexionSlide() {
 
         <div className="mb-8">
           <motion.span {...drawLine(0.05)} className="red-bar" />
-          <motion.p {...fadeUp(0.05)} className="label mb-3">Auditoría y Aprendizaje</motion.p>
+          <motion.p {...fadeUp(0.05)} className="label mb-3">No de programar — de gestionar</motion.p>
           <div className="overflow-hidden">
             <motion.h2 initial={{ y: '110%' }} animate={{ y: 0 }}
               transition={{ duration: 0.7, delay: 0.15, ease }} className="s-title">
-              Reflexión del Equipo
+              Aprenentatges de Gestió
             </motion.h2>
           </div>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-5">
-          {/* Qué funcionó */}
+        <div className="grid md:grid-cols-2 gap-5">
+          {/* Encerts */}
           <motion.div {...fadeUp(0.25)} className="glass rounded-2xl p-6 flex flex-col gap-4">
             <div className="flex items-center gap-2">
               <div className="w-6 h-6 rounded-full border border-green-500/40 flex items-center justify-center shrink-0">
@@ -46,53 +40,38 @@ export default function ReflexionSlide() {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
                 </svg>
               </div>
-              <span className="text-[10px] font-black uppercase tracking-[0.18em] text-green-500/80">Qué funcionó bien</span>
+              <span className="text-[10px] font-black uppercase tracking-[0.18em] text-green-500/80">Encerts</span>
             </div>
-            <ul className="flex flex-col gap-3">
-              {pros.map((p) => (
-                <li key={p} className="flex items-start gap-2.5 text-[11px] text-white/42 leading-relaxed">
-                  <span className="w-1 h-1 rounded-full bg-green-500/50 shrink-0 mt-1.5" />{p}
-                </li>
+            <motion.ul variants={staggerContainer(0.08, 0.3)} initial="initial" animate="animate"
+              className="flex flex-col gap-3">
+              {encerts.map((e) => (
+                <motion.li key={e} variants={staggerItem}
+                  className="flex items-start gap-2.5 text-[11px] text-white/42 leading-relaxed">
+                  <span className="w-1 h-1 rounded-full bg-green-500/50 shrink-0 mt-1.5" />{e}
+                </motion.li>
               ))}
-            </ul>
+            </motion.ul>
           </motion.div>
 
-          {/* Qué mejoraríamos */}
+          {/* Milloraríem */}
           <motion.div {...fadeUp(0.35)} className="glass rounded-2xl p-6 flex flex-col gap-4">
             <div className="flex items-center gap-2">
               <div className="w-6 h-6 rounded-full border border-orange-500/40 flex items-center justify-center shrink-0">
                 <svg className="w-3.5 h-3.5 text-orange-500" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
                 </svg>
               </div>
-              <span className="text-[10px] font-black uppercase tracking-[0.18em] text-orange-500/80">Qué mejoraríamos</span>
+              <span className="text-[10px] font-black uppercase tracking-[0.18em] text-orange-500/80">Milloraríem</span>
             </div>
-            <ul className="flex flex-col gap-3">
-              {cons.map((c) => (
-                <li key={c} className="flex items-start gap-2.5 text-[11px] text-white/42 leading-relaxed">
-                  <span className="w-1 h-1 rounded-full bg-orange-500/50 shrink-0 mt-1.5" />{c}
-                </li>
+            <motion.ul variants={staggerContainer(0.08, 0.35)} initial="initial" animate="animate"
+              className="flex flex-col gap-3">
+              {millores.map((m) => (
+                <motion.li key={m} variants={staggerItem}
+                  className="flex items-start gap-2.5 text-[11px] text-white/42 leading-relaxed">
+                  <span className="w-1 h-1 rounded-full bg-orange-500/50 shrink-0 mt-1.5" />{m}
+                </motion.li>
               ))}
-            </ul>
-          </motion.div>
-
-          {/* Mejoras futuras */}
-          <motion.div {...fadeUp(0.45)} className="glass rounded-2xl p-6 flex flex-col gap-4">
-            <div className="flex items-center gap-2">
-              <div className="w-6 h-6 rounded-full border border-cinema-red/40 flex items-center justify-center shrink-0">
-                <svg className="w-3.5 h-3.5 text-cinema-red" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
-              </div>
-              <span className="text-[10px] font-black uppercase tracking-[0.18em] text-cinema-red/80">Mejoras futuras</span>
-            </div>
-            <ul className="flex flex-col gap-3">
-              {future.map((f) => (
-                <li key={f.text} className="flex items-start gap-2.5 text-[11px] text-white/42 leading-relaxed">
-                  <span className="w-1 h-1 rounded-full bg-cinema-red/50 shrink-0 mt-1.5" />{f.text}
-                </li>
-              ))}
-            </ul>
+            </motion.ul>
           </motion.div>
         </div>
       </div>

@@ -23,7 +23,7 @@ export default function TitleSlide() {
         <motion.div {...fadeUp(0.55)} className="flex items-center gap-4 mb-8">
           <motion.span className="block h-px bg-cinema-red/60 origin-right"
             initial={{ width: 0 }} animate={{ width: 32 }} transition={{ duration: 0.5, delay: 0.6, ease }} />
-          <span className="label">Defensa del Sistema · Grupo 3</span>
+          <span className="label">Mòdul 0616 · Projecte Intermodular · CFGS DAW</span>
           <motion.span className="block h-px bg-cinema-red/60 origin-left"
             initial={{ width: 0 }} animate={{ width: 32 }} transition={{ duration: 0.5, delay: 0.6, ease }} />
         </motion.div>
@@ -49,10 +49,13 @@ export default function TitleSlide() {
           transition={{ duration: 0.7, delay: 1.05, ease, transformOrigin: 'center' }} />
 
         <motion.p {...fadeUp(1.1)} className="text-white/50 text-base max-w-lg leading-relaxed mb-3">
-          Plataforma web integral de gestión de cines y venta de entradas online
+          Gestió integral d'un projecte de desenvolupament web real
         </motion.p>
-        <motion.p {...fadeUp(1.2)} className="text-white/28 text-sm max-w-md leading-relaxed mb-12">
-          Análisis de arquitectura, toma de decisiones y organización del desarrollo del MVP
+        <motion.p {...fadeUp(1.2)} className="text-white/28 text-sm max-w-md leading-relaxed mb-6">
+          Com vam passar d'una idea a un producte desplegat en producció: planificació àgil, presa de decisions justificada i seguiment real
+        </motion.p>
+        <motion.p {...fadeUp(1.28)} className="text-white/18 text-xs tracking-[0.18em] uppercase mb-12">
+          Ayman Charoui · Danna Guevara · Ismael Achamrouk · Institut F. Vidal i Barraquer · 2025–2026
         </motion.p>
 
         <motion.div {...fadeUp(1.35)} className="flex items-center gap-3 text-white/20">

@@ -1,11 +1,30 @@
-import { motion } from 'framer-motion'
+import { motion, useMotionValue, useTransform, animate } from 'framer-motion'
+import { useEffect } from 'react'
 import { fadeUp, wipeUp, ease } from '../utils/motion'
 
 const team = [
-  { initials: 'AC', name: 'Ayman Charoui',     color: '#d4183d' },
-  { initials: 'DG', name: 'Danna Guevara',     color: '#9333ea' },
-  { initials: 'IA', name: 'Ismael Achamrouk',  color: '#0891b2' },
+  { initials: 'AC', name: 'Ayman Charoui',    color: '#d4183d' },
+  { initials: 'DG', name: 'Danna Guevara',    color: '#9333ea' },
+  { initials: 'IA', name: 'Ismael Achamrouk', color: '#0891b2' },
 ]
+
+const stats = [
+  { end: 82,  label: 'commits' },
+  { end: 38,  label: 'tasques' },
+  { end: 8,   label: 'fases'   },
+]
+
+function Counter({ end, delay = 0 }) {
+  const count = useMotionValue(0)
+  const rounded = useTransform(count, (v) => Math.round(v))
+
+  useEffect(() => {
+    const controls = animate(count, end, { duration: 1.8, delay, ease: [0.4, 0, 0.2, 1] })
+    return controls.stop
+  }, [count, end, delay])
+
+  return <motion.span>{rounded}</motion.span>
+}
 
 export default function FinalSlide() {
   return (
@@ -22,10 +41,10 @@ export default function FinalSlide() {
       <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-cinema-red/15 to-transparent" />
 
       <div className="relative z-10 text-center px-8 max-w-3xl w-full">
-        <motion.div {...fadeUp(0.1)} className="flex items-center justify-center gap-4 mb-10">
+        <motion.div {...fadeUp(0.1)} className="flex items-center justify-center gap-4 mb-8">
           <motion.span className="block h-px bg-cinema-red/50" initial={{ width: 0 }} animate={{ width: 40 }}
             transition={{ duration: 0.5, delay: 0.15, ease }} />
-          <span className="label">Fin de la presentación</span>
+          <span className="label">Mòdul 0616 · Projecte Intermodular</span>
           <motion.span className="block h-px bg-cinema-red/50" initial={{ width: 0 }} animate={{ width: 40 }}
             transition={{ duration: 0.5, delay: 0.15, ease }} />
         </motion.div>
@@ -34,13 +53,13 @@ export default function FinalSlide() {
           <div className="overflow-hidden">
             <motion.h2 {...wipeUp(0.25)}
               className="text-[clamp(3.5rem,10vw,8rem)] font-black uppercase leading-none text-white">
-              Gracias
+              Gràcies
             </motion.h2>
           </div>
           <div className="overflow-hidden">
             <motion.p {...wipeUp(0.4)}
               className="text-[clamp(1rem,2.5vw,1.8rem)] font-black uppercase leading-none text-cinema-red/70 mt-1">
-              por vuestra atención
+              per la vostra atenció
             </motion.p>
           </div>
         </div>
@@ -50,16 +69,27 @@ export default function FinalSlide() {
           initial={{ scaleX: 0 }} animate={{ scaleX: 1 }}
           transition={{ duration: 0.7, delay: 0.65, ease, transformOrigin: 'center' }} />
 
-        <motion.p {...fadeUp(0.75)} className="s-body max-w-md mx-auto mb-10">
-          Abrimos turno de preguntas.
+        {/* Stats counters */}
+        <motion.div {...fadeUp(0.7)} className="flex items-center justify-center gap-10 mb-8">
+          {stats.map((s, i) => (
+            <div key={s.label} className="flex flex-col items-center gap-1">
+              <span className="text-[3rem] font-black leading-none text-white tabular-nums">
+                <Counter end={s.end} delay={0.8 + i * 0.15} />
+              </span>
+              <span className="text-[9px] font-black uppercase tracking-[0.22em] text-white/25">{s.label}</span>
+            </div>
+          ))}
+        </motion.div>
+
+        <motion.p {...fadeUp(0.85)} className="s-body max-w-md mx-auto mb-6 text-white/35">
+          Un projecte real, gestionat de forma àgil, desplegat en producció.
         </motion.p>
 
-        {/* Team */}
-        <motion.div {...fadeUp(0.85)} className="flex items-center justify-center gap-4 mb-10">
+        <motion.div {...fadeUp(0.9)} className="flex items-center justify-center gap-4 mb-8">
           {team.map((m, i) => (
             <motion.div key={m.name}
               initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.9 + i * 0.1, duration: 0.5 }}
+              transition={{ delay: 0.95 + i * 0.1, duration: 0.5 }}
               className="flex flex-col items-center gap-2">
               <div className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-black"
                 style={{ background: `${m.color}20`, border: `1px solid ${m.color}35`, color: m.color }}>
@@ -71,7 +101,11 @@ export default function FinalSlide() {
         </motion.div>
 
         <motion.p {...fadeUp(1.1)} className="text-[9px] uppercase tracking-[0.22em] text-white/12">
-          CINE <span className="text-cinema-red/25">LUMIÈRE</span> · Grupo 3 · Proyecto Final
+          CINE <span className="text-cinema-red/25">LUMIÈRE</span> · Equip G3 · Institut F. Vidal i Barraquer · 2025–2026
+        </motion.p>
+
+        <motion.p {...fadeUp(1.2)} className="text-[10px] text-white/20 mt-3 italic">
+          Obrim torn de preguntes
         </motion.p>
       </div>
     </div>
