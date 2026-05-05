@@ -5,22 +5,22 @@ const team = [
   {
     initials: 'AC',
     name: 'Ayman Charoui',
-    role: 'Arquitecto de Software & Backend Core',
-    desc: 'Lógica de concurrencia, checkout, servicios API y UX/UI',
+    role: 'Product Owner + Scrum Master',
+    desc: 'Defineix objectius, supervisa tasques i facilita comunicació',
     color: '#d4183d',
   },
   {
     initials: 'DG',
     name: 'Danna Guevara',
-    role: 'DevOps, Infraestructura & Documentación',
-    desc: 'Docker, Railway, migración GitHub, memoria del proyecto',
+    role: 'Tech Lead + Documentació',
+    desc: 'Desenvolupa l\'arquitectura, redacta documentació tècnica i assegura codi net',
     color: '#9333ea',
   },
   {
     initials: 'IA',
     name: 'Ismael Achamrouk',
-    role: 'QA Testing, Accesos & Soporte',
-    desc: 'Laravel Breeze, middlewares IsAdmin/CanManage, PHPUnit',
+    role: 'QA + Frontend',
+    desc: 'Revisa bones pràctiques, proves funcionals i supervisa usabilitat',
     color: '#0891b2',
   },
 ]
