@@ -35,12 +35,12 @@ export default function ArquitecturaSlide() {
               <svg className="w-12 h-12 text-cinema-red/30" fill="none" stroke="currentColor" strokeWidth={1} viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5" />
               </svg>
-              <p className="text-white/25 text-sm font-mono text-center">[ Coloca arquitectura.mp4 en public/videos/ ]</p>
-              <p className="text-white/15 text-[11px] font-mono">public/videos/arquitectura.mp4</p>
+              <p className="text-white/25 text-sm font-mono text-center">[ Coloca demovideo.mp4 en public/videos/ ]</p>
+              <p className="text-white/15 text-[11px] font-mono">public/videos/demovideo.mp4</p>
             </div>
           ) : (
             <motion.video
-              src="/videos/arquitectura.mp4"
+              src="/videos/demovideo.mp4"
               aria-label="Vídeo d'arquitectura Cine Lumière"
               className="w-full rounded-2xl border border-cinema-red/15 object-contain max-h-[400px]"
               controls
