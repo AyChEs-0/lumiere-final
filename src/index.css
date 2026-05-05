@@ -1,0 +1,79 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background: linear-gradient(160deg, #111111 0%, #1a0a0a 50%, #120000 100%);
+    background-attachment: fixed;
+    color: #ffffff;
+    font-family: 'Figtree', sans-serif;
+    overflow-x: hidden;
+  }
+  ::selection {
+    background: rgba(212, 24, 61, 0.4);
+  }
+}
+
+@layer components {
+  .glass {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    background: rgba(25, 10, 10, 0.4);
+    border: 1px solid rgba(212, 24, 61, 0.18);
+  }
+
+  .glass-dark {
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    background: rgba(10, 5, 5, 0.7);
+    border: 1px solid rgba(212, 24, 61, 0.12);
+  }
+
+  .btn-primary {
+    @apply px-8 py-3 rounded-full bg-cinema-red text-white font-bold uppercase tracking-cinema text-sm
+           transition-all duration-300 hover:shadow-red-glow hover:-translate-y-0.5 active:scale-95;
+  }
+
+  .btn-ghost {
+    @apply px-8 py-3 rounded-full border-2 border-cinema-maroon text-white font-bold uppercase tracking-cinema text-sm
+           transition-all duration-300 hover:border-cinema-red hover:shadow-red-glow hover:-translate-y-0.5 active:scale-95;
+  }
+
+  .section-title {
+    @apply text-3xl md:text-4xl font-black uppercase tracking-cinema text-white;
+  }
+
+  .nav-link {
+    @apply relative text-sm font-bold uppercase tracking-cinema text-white/70 hover:text-white
+           transition-colors duration-300 py-1;
+  }
+
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #d4183d;
+    transition: width 0.25s ease;
+  }
+
+  .nav-link:hover::after {
+    width: 100%;
+  }
+
+  .red-line {
+    @apply block w-12 h-1 bg-cinema-red rounded-full mb-4;
+  }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #111; }
+::-webkit-scrollbar-thumb { background: #800000; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #d4183d; }
