@@ -1,99 +1,82 @@
 import { motion } from 'framer-motion'
-import { useEffect, useState } from 'react'
 import { fadeUp, drawLine, scaleIn, ease } from '../utils/motion'
 
-function Counter({ to, suffix = '', delay = 0 }) {
-  const [val, setVal] = useState(0)
-  useEffect(() => {
-    const t = setTimeout(() => {
-      const start = performance.now()
-      const dur = 1200
-      const tick = (now) => {
-        const p = Math.min((now - start) / dur, 1)
-        const e = 1 - Math.pow(1 - p, 3)
-        setVal(Math.round(e * to))
-        if (p < 1) requestAnimationFrame(tick)
-      }
-      requestAnimationFrame(tick)
-    }, delay)
-    return () => clearTimeout(t)
-  }, [to, delay])
-  return <>{val}{suffix}</>
-}
-
-const stats = [
-  { display: <Counter to={3} delay={400} />,    label: 'Roles de usuario',    sub: 'Admin · Taquilla · Cliente' },
-  { display: <Counter to={100} suffix="%" delay={500} />, label: 'Online',    sub: 'Sin app — solo navegador' },
-  { display: <Counter to={3} delay={600} />,    label: 'Pasos de compra',     sub: 'Sesión · Butaca · Pago' },
-  { display: 'API',                              label: 'Integración externa', sub: 'Cartelera en tiempo real' },
+const team = [
+  {
+    initials: 'AC',
+    name: 'Ayman Charoui',
+    role: 'Arquitecto de Software & Backend Core',
+    desc: 'Lógica de concurrencia, checkout, servicios API y UX/UI',
+    color: '#d4183d',
+  },
+  {
+    initials: 'DG',
+    name: 'Danna Guevara',
+    role: 'DevOps, Infraestructura & Documentación',
+    desc: 'Docker, Railway, migración GitHub, memoria del proyecto',
+    color: '#9333ea',
+  },
+  {
+    initials: 'IA',
+    name: 'Ismael Achamrouk',
+    role: 'QA Testing, Accesos & Soporte',
+    desc: 'Laravel Breeze, middlewares IsAdmin/CanManage, PHPUnit',
+    color: '#0891b2',
+  },
 ]
 
 export default function AboutSlide() {
   return (
-    <div className="w-full h-full flex items-center px-[8vw] py-16">
+    <div className="w-full h-full flex items-center px-[8vw] py-14">
       <div className="w-full max-w-6xl mx-auto grid md:grid-cols-[1fr_1px_1fr] gap-0 items-center">
 
-        {/* Left — text */}
-        <div className="pr-16">
+        {/* Left */}
+        <div className="pr-14">
           <motion.span {...drawLine(0.1)} className="red-bar" />
-          <motion.p   {...fadeUp(0.1)} className="label mb-4">¿Qué es?</motion.p>
-
-          <div className="overflow-hidden mb-2">
-            <motion.h2
-              initial={{ y: '110%' }} animate={{ y: 0 }}
-              transition={{ duration: 0.72, delay: 0.2, ease }}
-              className="s-title"
-            >
+          <motion.p {...fadeUp(0.1)} className="label mb-4">¿Qué es?</motion.p>
+          <div className="overflow-hidden mb-1">
+            <motion.h2 initial={{ y: '110%' }} animate={{ y: 0 }}
+              transition={{ duration: 0.72, delay: 0.2, ease }} className="s-title">
               Gestión cinematográfica
             </motion.h2>
           </div>
           <div className="overflow-hidden mb-8">
-            <motion.h2
-              initial={{ y: '110%' }} animate={{ y: 0 }}
-              transition={{ duration: 0.72, delay: 0.3, ease }}
-              className="s-title text-cinema-red"
-            >
+            <motion.h2 initial={{ y: '110%' }} animate={{ y: 0 }}
+              transition={{ duration: 0.72, delay: 0.3, ease }} className="s-title text-cinema-red">
               de extremo a extremo.
             </motion.h2>
           </div>
-
-          <motion.p {...fadeUp(0.45)} className="s-body mb-5">
-            Cine Lumière es una aplicación web full-stack que gestiona cines,
-            salas y sesiones, ofrece cartelera dinámica desde una API externa
-            y procesa la compra de entradas de principio a fin.
+          <motion.p {...fadeUp(0.45)} className="s-body mb-4">
+            Cine Lumière es una plataforma web full-stack para la gestión integral de cines: cartelera sincronizada con TMDB, sistema de reservas con control de concurrencia ACID y checkout en 3 pasos con validación real de pagos.
           </motion.p>
           <motion.p {...fadeUp(0.55)} className="s-body">
-            Construida con Laravel 11 y MySQL, con autenticación por roles,
-            bloqueo temporal de butacas y flujo de compra en tres pasos.
+            Construida sobre Laravel 12, MySQL 8.4 y Tailwind CSS, con Docker para el entorno de desarrollo y Railway para el despliegue en producción.
           </motion.p>
         </div>
 
-        {/* Vertical divider */}
-        <motion.div
-          className="hidden md:block h-64 w-px bg-gradient-to-b from-transparent via-cinema-red/25 to-transparent origin-top"
-          initial={{ scaleY: 0 }}
-          animate={{ scaleY: 1 }}
-          transition={{ duration: 0.8, delay: 0.5, ease }}
-        />
+        {/* Divider */}
+        <motion.div className="hidden md:block h-64 w-px bg-gradient-to-b from-transparent via-cinema-red/25 to-transparent origin-top"
+          initial={{ scaleY: 0 }} animate={{ scaleY: 1 }}
+          transition={{ duration: 0.8, delay: 0.5, ease }} />
 
-        {/* Right — stats */}
-        <div className="pl-16 grid grid-cols-2 gap-4">
-          {stats.map(({ display, label, sub }, i) => (
-            <motion.div
-              key={label}
-              {...scaleIn(0.35 + i * 0.1)}
-              whileHover={{ y: -4, transition: { duration: 0.25 } }}
-              className="glass rounded-2xl p-6 flex flex-col gap-1"
-            >
-              <span className="text-[clamp(2.2rem,4vw,3.2rem)] font-black text-cinema-red leading-none tabular-nums">
-                {display}
-              </span>
-              <span className="text-[11px] font-black uppercase tracking-[0.14em] text-white mt-2">{label}</span>
-              <span className="text-[10px] text-white/30">{sub}</span>
+        {/* Right — team */}
+        <div className="pl-14 flex flex-col gap-3">
+          <motion.p {...fadeUp(0.3)} className="label mb-2">Equipo — Grupo 3</motion.p>
+          {team.map((m, i) => (
+            <motion.div key={m.name} {...scaleIn(0.35 + i * 0.1)}
+              whileHover={{ y: -3, transition: { duration: 0.2 } }}
+              className="glass rounded-xl p-4 flex items-center gap-4">
+              <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 text-white font-black text-sm"
+                style={{ background: `${m.color}25`, border: `1px solid ${m.color}40`, color: m.color }}>
+                {m.initials}
+              </div>
+              <div className="min-w-0">
+                <p className="text-xs font-black text-white truncate">{m.name}</p>
+                <p className="text-[10px] text-white/40 leading-snug mt-0.5">{m.desc}</p>
+              </div>
             </motion.div>
           ))}
         </div>
-
       </div>
     </div>
   )
