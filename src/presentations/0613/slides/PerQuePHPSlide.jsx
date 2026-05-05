@@ -1,73 +1,90 @@
 import { motion } from 'framer-motion'
-import { fadeUp, drawLine, staggerContainer, staggerItem, ease } from '../../../utils/motion'
+import { fadeUp, drawLine, ease } from '../../../utils/motion'
 
-const cards = [
-  {
-    color: '#0891b2',
-    num: '01',
-    title: 'Fonaments sense màgia',
-    desc: 'PHP natiu obliga a entendre com funciona realment el web: el cicle request/response, la gestió de sessions, la construcció manual de queries. Sense abstracció, sense framework.',
-    detail: 'Cada línia de codi té un perquè visible.',
-  },
-  {
-    color: '#9333ea',
-    num: '02',
-    title: 'Aprendre a depurar de debò',
-    desc: 'Sense ORM ni Router automàtic, els errors apareixen exactament on son. Llegir un stack trace de PDO o un error de SQL és una habilitat que els frameworks amaguen.',
-    detail: 'Errarem més, aprendrem més ràpid.',
-  },
-  {
-    color: '#16a34a',
-    num: '03',
-    title: 'Requisit del mòdul 0613',
-    desc: 'El currículum del CFGS DAW exigeix demostrar competència en programació servidor sense frameworks. La migració posterior a Laravel valida que entenem allò que automatitza.',
-    detail: 'Base → Framework, no a l\'inrevés.',
-  },
+const phase1 = [
+  'Front Controller: index.php',
+  'Routing manual: ?action=afegir',
+  'MVC manual: Model + Controlador + Vista',
+  'PDO amb Prepared Statements',
+  'Patró PRG manual',
+  'htmlspecialchars() a cada vista',
+]
+
+const phase2 = [
+  'Front Controller: public/index.php (automàtic)',
+  'Routing declaratiu: web.php',
+  'MVC amb Eloquent ORM',
+  'PDO gestionat per Laravel',
+  'redirect()->with() (PRG automàtic)',
+  'Blade {{ }} (escapament automàtic)',
 ]
 
 export default function PerQuePHPSlide() {
   return (
-    <div className="w-full h-full flex flex-col justify-center px-[8vw] py-10">
+    <div className="w-full h-full flex flex-col justify-center px-[8vw] py-8">
       <div className="w-full max-w-6xl mx-auto">
 
-        <div className="mb-8">
-          <motion.span {...drawLine(0.05)} className="red-bar" style={{ background: '#0891b2' }} />
-          <motion.p {...fadeUp(0.05)} className="label mb-3">Decisió de partida · Setmana 10</motion.p>
+        <div className="mb-6">
+          <motion.span {...drawLine(0.05)} className="red-bar" />
+          <motion.p {...fadeUp(0.05)} className="label mb-3">Evolució arquitectònica · Setmanes 10–12</motion.p>
           <div className="overflow-hidden">
             <motion.h2 initial={{ y: '110%' }} animate={{ y: 0 }}
               transition={{ duration: 0.7, delay: 0.15, ease }} className="s-title">
-              Per que PHP Natiu?
+              Dues Fases, Una Mateixa Lògica
             </motion.h2>
           </div>
         </div>
 
-        <motion.div variants={staggerContainer(0.1, 0.25)} initial="initial" animate="animate"
-          className="grid grid-cols-3 gap-5 mb-8">
-          {cards.map((c) => (
-            <motion.div key={c.num} variants={staggerItem}
-              className="glass rounded-xl p-6 flex flex-col gap-4 relative overflow-hidden">
-              <div className="absolute top-4 right-4 text-[2.5rem] font-black leading-none select-none"
-                style={{ color: `${c.color}08` }}>{c.num}</div>
-              <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0"
-                style={{ background: `${c.color}15`, border: `1px solid ${c.color}25` }}>
-                <span className="text-[10px] font-black" style={{ color: c.color }}>{c.num}</span>
-              </div>
-              <div>
-                <h3 className="text-[12px] font-black text-white mb-2">{c.title}</h3>
-                <p className="text-[10px] text-white/40 leading-relaxed mb-3">{c.desc}</p>
-                <p className="text-[9px] font-black italic" style={{ color: `${c.color}80` }}>{c.detail}</p>
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
+        <div className="grid grid-cols-[1fr_auto_1fr] gap-4 items-stretch mb-6">
+          {/* Phase 1 */}
+          <motion.div
+            initial={{ opacity: 0, x: -24 }} animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, delay: 0.3, ease }}
+            className="glass rounded-xl p-6 flex flex-col gap-3"
+            style={{ background: 'rgba(8,145,178,0.06)', borderColor: 'rgba(8,145,178,0.2)' }}>
+            <span className="text-[9px] font-black uppercase tracking-[0.18em] text-[#0891b2]">Fase 1 · PHP Natiu (M0613)</span>
+            <div className="flex flex-col gap-2">
+              {phase1.map((item) => (
+                <div key={item} className="flex items-start gap-2">
+                  <span className="w-1 h-1 rounded-full bg-[#0891b2]/50 mt-1.5 shrink-0" />
+                  <span className="text-[10px] text-white/45 leading-snug font-mono">{item}</span>
+                </div>
+              ))}
+            </div>
+          </motion.div>
 
-        <motion.div {...fadeUp(0.65)} className="flex items-center gap-4 justify-center">
-          <span className="h-px w-16 bg-white/10" />
-          <p className="text-[11px] text-white/30 italic text-center">
-            Setmana 12 vam migrar a Laravel — però amb tota la base construida manualment
-          </p>
-          <span className="h-px w-16 bg-white/10" />
-        </motion.div>
+          {/* Arrow */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.4, delay: 0.5, ease }}
+            className="flex flex-col items-center justify-center gap-2 px-2">
+            <svg className="w-8 h-8 text-cinema-red/60" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+            </svg>
+            <span className="text-[8px] font-black uppercase tracking-[0.1em] text-cinema-red/50 whitespace-nowrap">MIGRACIÓ</span>
+          </motion.div>
+
+          {/* Phase 2 */}
+          <motion.div
+            initial={{ opacity: 0, x: 24 }} animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, delay: 0.3, ease }}
+            className="glass rounded-xl p-6 flex flex-col gap-3"
+            style={{ background: 'rgba(147,51,234,0.06)', borderColor: 'rgba(147,51,234,0.2)' }}>
+            <span className="text-[9px] font-black uppercase tracking-[0.18em] text-[#9333ea]">Fase 2 · Laravel 12 (M0616)</span>
+            <div className="flex flex-col gap-2">
+              {phase2.map((item) => (
+                <div key={item} className="flex items-start gap-2">
+                  <span className="w-1 h-1 rounded-full bg-[#9333ea]/50 mt-1.5 shrink-0" />
+                  <span className="text-[10px] text-white/45 leading-snug font-mono">{item}</span>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+
+        <motion.p {...fadeUp(0.65)} className="text-center text-[11px] text-white/25 italic">
+          El mateix patró, diferent nivell d'abstracció. Conèixer la Fase 1 explica per què existeix la Fase 2.
+        </motion.p>
 
       </div>
     </div>

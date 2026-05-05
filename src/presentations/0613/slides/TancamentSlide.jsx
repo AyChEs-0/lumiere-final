@@ -1,109 +1,79 @@
-import { motion, useMotionValue, useTransform, animate } from 'framer-motion'
-import { useEffect } from 'react'
-import { fadeUp, wipeUp, ease } from '../../../utils/motion'
+import { motion } from 'framer-motion'
+import { fadeUp, drawLine, staggerContainer, staggerItem, ease } from '../../../utils/motion'
 
-const team = [
-  { initials: 'AC', name: 'Ayman Charoui',    color: '#d4183d' },
-  { initials: 'DG', name: 'Danna Guevara',    color: '#9333ea' },
-  { initials: 'IA', name: 'Ismael Achamrouk', color: '#0891b2' },
+const services = [
+  {
+    color: '#0891b2',
+    name: 'TMDB — The Movie Database',
+    why: 'Mantenir manualment un catàleg de pel·lícules seria inviable. TMDB ens dona dades professionals sense cost de manteniment.',
+    desc: 'Proporciona la cartelera en temps real: pòsters, sinopsis, puntuacions i gèneres de les pel·lícules en cartellera a Espanya (region=ES). Sincronització automàtica cada 6 hores via Scheduler.',
+    extra: 'Si l\'API cau → fallback automàtic a BD local. La web no es trenca mai.',
+    extraLabel: 'Gestió d\'errors',
+  },
+  {
+    color: '#9333ea',
+    name: 'Railway — Desplegament PaaS',
+    why: 'VPS requeria gestió manual de servidor, certificats SSL i configuració de xarxa. Railway ho automatitza tot.',
+    desc: 'Allotja l\'aplicació en producció amb MySQL gestionat, HTTPS automàtic i CI/CD integrat. Cada push a main desplega automàticament.',
+    extra: 'Vam migrar de GitLab a GitHub privat perquè Railway no integra GitLab directament.',
+    extraLabel: 'Decisió clau',
+  },
+  {
+    color: '#d97706',
+    name: 'Mailtrap — Testing d\'Emails',
+    why: 'Permet provar el flux complet d\'emails sense enviar spam real ni necessitar un servidor SMTP de producció durant el desenvolupament.',
+    desc: 'Intercepta tots els emails enviats en entorn local. Confirmacions de reserva i recuperació de contrasenya arriben a Mailtrap en lloc de a l\'usuari real durant el desenvolupament.',
+    extra: null,
+    extraLabel: null,
+  },
+  {
+    color: '#16a34a',
+    name: 'BaconQrCode — Tickets QR',
+    why: 'Un UUID simple seria predecible. HMAC-SHA256 garanteix que el QR és únic i verificable sense base de dades.',
+    desc: 'Genera els codis QR dels tickets de reserva en format SVG al servidor. El QR conté un token HMAC-SHA256 que és impossible de falsificar sense la APP_KEY del servidor.',
+    extra: null,
+    extraLabel: null,
+  },
 ]
-
-const stats = [
-  { end: 9,  label: 'RAs coberts' },
-  { end: 4,  label: 'capes seguretat' },
-  { end: 3,  label: 'capes MVC' },
-]
-
-function Counter({ end, delay = 0 }) {
-  const count = useMotionValue(0)
-  const rounded = useTransform(count, (v) => Math.round(v))
-  useEffect(() => {
-    const controls = animate(count, end, { duration: 1.8, delay, ease: [0.4, 0, 0.2, 1] })
-    return controls.stop
-  }, [count, end, delay])
-  return <motion.span>{rounded}</motion.span>
-}
 
 export default function TancamentSlide() {
   return (
-    <div className="film-grain relative w-full h-full flex items-center justify-center overflow-hidden">
-      <div className="absolute inset-0 bg-cover bg-center opacity-15 scale-105"
-        style={{ backgroundImage: `url('https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=1920&q=80')` }} />
-      <div className="absolute inset-0 bg-gradient-to-br from-[#0e0e0e]/98 via-[#060d14]/95 to-[#040d16]/98" />
+    <div className="w-full h-full flex flex-col justify-center px-[8vw] py-8">
+      <div className="w-full max-w-6xl mx-auto">
 
-      <motion.div className="absolute w-[800px] h-[800px] rounded-full pointer-events-none"
-        style={{ background: 'radial-gradient(circle, rgba(8,145,178,0.07) 0%, transparent 65%)' }}
-        animate={{ scale: [1, 1.1, 1] }} transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }} />
-
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#0891b2]/25 to-transparent" />
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#0891b2]/15 to-transparent" />
-
-      <div className="relative z-10 text-center px-8 max-w-3xl w-full">
-        <motion.div {...fadeUp(0.1)} className="flex items-center justify-center gap-4 mb-8">
-          <motion.span className="block h-px bg-[#0891b2]/50" initial={{ width: 0 }} animate={{ width: 40 }}
-            transition={{ duration: 0.5, delay: 0.15, ease }} />
-          <span className="label">Mòdul 0613 · Programació Web en Entorn Servidor</span>
-          <motion.span className="block h-px bg-[#0891b2]/50" initial={{ width: 0 }} animate={{ width: 40 }}
-            transition={{ duration: 0.5, delay: 0.15, ease }} />
-        </motion.div>
-
-        <div className="mb-4">
+        <div className="mb-6">
+          <motion.span {...drawLine(0.05)} className="red-bar" />
+          <motion.p {...fadeUp(0.05)} className="label mb-3">Integracions · APIs externes</motion.p>
           <div className="overflow-hidden">
-            <motion.h2 {...wipeUp(0.25)}
-              className="text-[clamp(3.5rem,10vw,8rem)] font-black uppercase leading-none text-white">
-              Gracies
+            <motion.h2 initial={{ y: '110%' }} animate={{ y: 0 }}
+              transition={{ duration: 0.7, delay: 0.15, ease }} className="s-title">
+              Serveis Externs: Per Que Cadascun
             </motion.h2>
-          </div>
-          <div className="overflow-hidden">
-            <motion.p {...wipeUp(0.4)}
-              className="text-[clamp(1rem,2.5vw,1.8rem)] font-black uppercase leading-none text-[#0891b2]/70 mt-1">
-              per la vostra atenció
-            </motion.p>
           </div>
         </div>
 
-        <motion.span className="block h-px mx-auto mb-8 origin-center"
-          style={{ background: 'linear-gradient(to right, transparent, #0891b240, transparent)', width: '16rem' }}
-          initial={{ scaleX: 0 }} animate={{ scaleX: 1 }}
-          transition={{ duration: 0.7, delay: 0.65, ease, transformOrigin: 'center' }} />
-
-        <motion.div {...fadeUp(0.7)} className="flex items-center justify-center gap-10 mb-6">
-          {stats.map((s, i) => (
-            <div key={s.label} className="flex flex-col items-center gap-1">
-              <span className="text-[3rem] font-black leading-none text-white tabular-nums">
-                <Counter end={s.end} delay={0.8 + i * 0.15} />
-              </span>
-              <span className="text-[9px] font-black uppercase tracking-[0.22em] text-white/25">{s.label}</span>
-            </div>
-          ))}
-        </motion.div>
-
-        <motion.p {...fadeUp(0.82)} className="s-body max-w-md mx-auto mb-6 text-white/35">
-          De PHP Natiu a Laravel — entenent cada pas del camí.
-        </motion.p>
-
-        <motion.div {...fadeUp(0.88)} className="flex items-center justify-center gap-4 mb-8">
-          {team.map((m, i) => (
-            <motion.div key={m.name}
-              initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.95 + i * 0.1, duration: 0.5 }}
-              className="flex flex-col items-center gap-2">
-              <div className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-black"
-                style={{ background: `${m.color}20`, border: `1px solid ${m.color}35`, color: m.color }}>
-                {m.initials}
-              </div>
-              <span className="text-[9px] text-white/30 font-medium">{m.name}</span>
+        <motion.div variants={staggerContainer(0.09, 0.25)} initial="initial" animate="animate"
+          className="grid grid-cols-2 gap-4">
+          {services.map((s) => (
+            <motion.div key={s.name} variants={staggerItem}
+              className="glass rounded-xl p-5 flex flex-col gap-3"
+              style={{ borderColor: `${s.color}18` }}>
+              <span className="text-[11px] font-black text-white">{s.name}</span>
+              <p className="text-[9.5px] text-white/40 leading-relaxed">{s.desc}</p>
+              <p className="text-[9px] italic" style={{ color: `${s.color}80` }}>
+                Per que: {s.why}
+              </p>
+              {s.extra && (
+                <div className="flex items-start gap-2 pt-1 border-t border-white/5">
+                  <span className="text-[8px] font-black uppercase tracking-[0.12em] whitespace-nowrap mt-0.5"
+                    style={{ color: `${s.color}60` }}>{s.extraLabel}:</span>
+                  <span className="text-[9px] text-white/30 leading-snug">{s.extra}</span>
+                </div>
+              )}
             </motion.div>
           ))}
         </motion.div>
 
-        <motion.p {...fadeUp(1.1)} className="text-[9px] uppercase tracking-[0.22em] text-white/12">
-          CINE <span className="text-[#0891b2]/25">LUMIÈRE</span> · Equip G3 · Institut F. Vidal i Barraquer · 2025–2026
-        </motion.p>
-
-        <motion.p {...fadeUp(1.2)} className="text-[10px] text-white/20 mt-3 italic">
-          Obrim torn de preguntes
-        </motion.p>
       </div>
     </div>
   )
