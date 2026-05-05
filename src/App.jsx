@@ -2,22 +2,34 @@ import { useState, useEffect, useCallback } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import SlideProgress      from './components/SlideProgress'
 import TitleSlide         from './slides/TitleSlide'
+import RASlide            from './slides/RASlide'
 import PropositSlide      from './slides/PropositSlide'
 import AboutSlide         from './slides/AboutSlide'
 import PlanificacionSlide from './slides/PlanificacionSlide'
-import FeaturesSlide      from './slides/FeaturesSlide'
-import CarteleraSlide     from './slides/CarteleraSlide'
-import FlujoSlide         from './slides/FlujoSlide'
+import MetodologiaSlide   from './slides/MetodologiaSlide'
+import InformesSlide      from './slides/InformesSlide'
+import TutoriaSlide       from './slides/TutoriaSlide'
 import DecisionesSlide    from './slides/DecisionesSlide'
 import ArquitecturaSlide  from './slides/ArquitecturaSlide'
-import TechSlide          from './slides/TechSlide'
 import ReflexionSlide     from './slides/ReflexionSlide'
 import FinalSlide         from './slides/FinalSlide'
 
+// Slide 1  — Portada
+// Slide 2  — Què avalua el mòdul 0616? (4 RAs)
+// Slide 3  — Propòsit i Visió (benchmarking, solució, disseny)
+// Slide 4  — L'Equip G3
+// Slide 5  — 8 Fases · 7 Mesos · 38 Tasques (roadmap)
+// Slide 6  — Com ens Vam Organitzar (Git Flow, Docker, commits)
+// Slide 7  — 4 Informes · 1 Tutoria (seguiment)
+// Slide 8  — El Dia que ens van Frenar (tutoria 19/02/2026)
+// Slide 9  — 4 Decisions de Gestió
+// Slide 10 — El Producte Desplegat (arquitectura)
+// Slide 11 — Aprenentatges de Gestió (reflexió)
+// Slide 12 — Tancament (stats + equip)
 const SLIDES = [
-  TitleSlide, PropositSlide, AboutSlide, PlanificacionSlide, FeaturesSlide, CarteleraSlide,
-  FlujoSlide, DecisionesSlide, ArquitecturaSlide,
-  TechSlide, ReflexionSlide, FinalSlide,
+  TitleSlide, RASlide, PropositSlide, AboutSlide,
+  PlanificacionSlide, MetodologiaSlide, InformesSlide, TutoriaSlide,
+  DecisionesSlide, ArquitecturaSlide, ReflexionSlide, FinalSlide,
 ]
 
 const variants = {
