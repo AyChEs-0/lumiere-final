@@ -5,26 +5,26 @@ const services = [
   {
     color: '#d4183d',
     name: 'PurchaseService',
-    desc: 'Tota la lògica de confirmació dins d\'un DB::transaction. Crea la reserva, associa butaques i elimina els SeatLocks — tot o res.',
-    why: 'El controlador tenia 80 línies. Movent-ho al servei va quedar en 10.',
+    desc: 'Confirma la compra dins d\'un DB::transaction. Crea la reserva, associa butaques i elimina SeatLocks — tot o res.',
+    why: 'El controlador tenia 80 línies. Al servei va quedar en 10.',
   },
   {
     color: '#0891b2',
     name: 'CachedMovieService',
-    desc: 'Si TMDB respon, usa les dades externes. Si hi ha timeout o error, fa fallback automàtic a la BD local.',
-    why: 'Graceful Degradation — la web funciona encara que TMDB caigui.',
+    desc: 'Si TMDB falla, fa fallback automàtic a la BD local. El controlador mai sap d\'on venen les dades.',
+    why: 'La web funciona encara que TMDB caigui.',
   },
   {
     color: '#9333ea',
     name: 'SeatAvailabilityService',
-    desc: 'Calcula en temps real quines butaques estan lliures, reservades o bloquejades. Construeix la resposta JSON de l\'API AJAX.',
-    why: 'La mateixa lògica s\'usava en 3 llocs. Centralitzant-la, canviar-la afecta tots alhora.',
+    desc: 'Calcula en temps real l\'estat de cada butaca. Construeix la resposta JSON de l\'API AJAX.',
+    why: 'La mateixa lògica s\'usava en 3 llocs — centralitzada aquí.',
   },
   {
     color: '#16a34a',
     name: 'GuestCheckoutService',
-    desc: 'Gestiona la compra sense registre. Crea una reserva amb fk_usuario_id = null i guarda nom + email a la reserva.',
-    why: 'No obligar a registrar-se redueix la fricció i augmenta les conversions.',
+    desc: 'Compra sense registre. Reserva amb fk_usuario_id = null, nom i email directament a la taula.',
+    why: 'No obligar a registrar-se redueix la fricció de compra.',
   },
 ]
 
@@ -44,20 +44,20 @@ export default function PHPvsLaravelSlide() {
           </div>
         </div>
 
-        <motion.p {...fadeUp(0.28)} className="text-[13px] text-gray-500 mb-6 leading-relaxed max-w-2xl">
+        <motion.p {...fadeUp(0.28)} className="text-[15px] text-gray-500 mb-7 leading-relaxed max-w-2xl">
           Quan la lògica d'un controlador creix massa, la movem a un Servei.
-          El controlador delega — el Servei executa. Resultat: controladors llegibles, lògica testejable.
+          Controladors llegibles, lògica testejable.
         </motion.p>
 
         <motion.div variants={staggerContainer(0.08, 0.3)} initial="initial" animate="animate"
-          className="grid grid-cols-2 gap-4">
+          className="grid grid-cols-2 gap-5">
           {services.map((s) => (
             <motion.div key={s.name} variants={staggerItem}
-              className="glass rounded-xl p-6 flex flex-col gap-3"
-              style={{ borderLeft: `3px solid ${s.color}` }}>
-              <span className="text-[14px] font-black font-mono" style={{ color: s.color }}>{s.name}</span>
-              <p className="text-[12px] text-gray-600 leading-relaxed">{s.desc}</p>
-              <p className="text-[10px] text-gray-400 italic">{s.why}</p>
+              className="glass rounded-xl p-7 flex flex-col gap-3"
+              style={{ borderLeft: `4px solid ${s.color}` }}>
+              <span className="text-[16px] font-black font-mono" style={{ color: s.color }}>{s.name}</span>
+              <p className="text-[13px] text-gray-600 leading-relaxed">{s.desc}</p>
+              <p className="text-[11px] text-gray-400 italic">{s.why}</p>
             </motion.div>
           ))}
         </motion.div>

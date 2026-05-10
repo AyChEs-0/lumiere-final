@@ -5,30 +5,26 @@ const services = [
   {
     color: '#0891b2',
     name: 'TMDB',
-    full: 'The Movie Database',
-    desc: 'Cartelera en temps real: pòsters, sinopsis i gèneres de pel·lícules en cartellera a Espanya. Sincronització cada 6 hores.',
-    why: 'Mantenir manualment el catàleg seria inviable. TMDB és professional i gratuït.',
+    desc: 'Cartelera en temps real amb pòsters i sinopsis. Sync cada 6h. Si cau → fallback a BD local.',
+    why: 'Mantenir manualment el catàleg seria inviable.',
   },
   {
     color: '#9333ea',
     name: 'Railway',
-    full: 'Desplegament PaaS',
-    desc: 'MySQL gestionat, HTTPS automàtic i CI/CD integrat. Cada push a main desplega automàticament.',
-    why: 'Vam migrar de GitLab a GitHub perquè Railway no integra GitLab directament.',
+    desc: 'MySQL gestionat, HTTPS automàtic, CI/CD integrat. Cada push a main desplega automàticament.',
+    why: 'Vam migrar de GitLab a GitHub perquè Railway no integra GitLab.',
   },
   {
     color: '#d97706',
     name: 'Mailtrap',
-    full: 'Testing d\'Emails',
-    desc: 'Intercepta tots els emails en entorn local. Confirmacions i recuperació de contrasenya arriben aquí, no al usuari real.',
-    why: 'Proves de flux complet d\'emails sense enviar spam ni necessitar SMTP de producció.',
+    desc: 'Intercepta emails en local. Confirmacions i recuperació de contrasenya no arriben a usuaris reals.',
+    why: 'Proves de flux d\'emails sense spam ni SMTP de producció.',
   },
   {
     color: '#16a34a',
     name: 'BaconQrCode',
-    full: 'Tickets QR',
-    desc: 'Genera QRs en SVG al servidor. El token és HMAC-SHA256(APP_KEY, "reserva:ID") — impossible de falsificar.',
-    why: 'Un UUID simple seria predecible. HMAC-SHA256 garanteix autenticitat sense BD.',
+    desc: 'QRs SVG amb token HMAC-SHA256(APP_KEY, "reserva:ID"). Impossible de falsificar sense la clau.',
+    why: 'Un UUID seria predecible. HMAC garanteix autenticitat.',
   },
 ]
 
@@ -49,17 +45,14 @@ export default function TancamentSlide() {
         </div>
 
         <motion.div variants={staggerContainer(0.09, 0.25)} initial="initial" animate="animate"
-          className="grid grid-cols-2 gap-4">
+          className="grid grid-cols-2 gap-5">
           {services.map((s) => (
             <motion.div key={s.name} variants={staggerItem}
-              className="glass rounded-xl p-6 flex flex-col gap-3"
-              style={{ borderLeft: `3px solid ${s.color}` }}>
-              <div>
-                <span className="text-[14px] font-black" style={{ color: s.color }}>{s.name}</span>
-                <span className="text-[11px] text-gray-400 ml-2">— {s.full}</span>
-              </div>
-              <p className="text-[12px] text-gray-600 leading-relaxed">{s.desc}</p>
-              <p className="text-[10px] text-gray-400 italic">{s.why}</p>
+              className="glass rounded-xl p-7 flex flex-col gap-3"
+              style={{ borderLeft: `4px solid ${s.color}` }}>
+              <span className="text-[17px] font-black" style={{ color: s.color }}>{s.name}</span>
+              <p className="text-[13px] text-gray-600 leading-relaxed">{s.desc}</p>
+              <p className="text-[11px] text-gray-400 italic">{s.why}</p>
             </motion.div>
           ))}
         </motion.div>
