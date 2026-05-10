@@ -1,7 +1,7 @@
 import SlideEngine from '../../components/shared/SlideEngine'
 import TitleSlide0613           from './slides/TitleSlide0613'
+import DemoVideoSlide           from './slides/DemoVideoSlide'
 import QueAvaluaSlide           from './slides/QueAvaluaSlide'
-import PerQuePHPSlide           from './slides/PerQuePHPSlide'
 import ArquitecturaMVCSlide     from './slides/ArquitecturaMVCSlide'
 import DecisionsSeguretatSlide  from './slides/DecisionsSeguretatSlide'
 import FluxPeticioSlide         from './slides/FluxPeticioSlide'
@@ -15,13 +15,13 @@ import TancamentFinalSlide      from './slides/TancamentFinalSlide'
 
 const SLIDES = [
   TitleSlide0613,          // 1  Portada
-  QueAvaluaSlide,          // 2  Visió Tècnica
-  PerQuePHPSlide,          // 3  Dues Fases
+  DemoVideoSlide,          // 2  Demo Video
+  QueAvaluaSlide,          // 3  Visió Tècnica
   ArquitecturaMVCSlide,    // 4  Estructura Carpetes
   DecisionsSeguretatSlide, // 5  Rols i Middlewares
   FluxPeticioSlide,        // 6  Controladors
   PHPvsLaravelSlide,       // 7  Serveis
-  EquipG3Slide,            // 8  Butaques i Concurrència
+  EquipG3Slide,            // 8  Butaques i Concurrència (amb codi)
   ReflexioFAQSlide,        // 9  Models i Relacions
   TancamentSlide,          // 10 Serveis Externs
   ReflexioCriticaSlide,    // 11 Reflexió Crítica
@@ -30,5 +30,5 @@ const SLIDES = [
 ]
 
 export default function Presentation0613() {
-  return <SlideEngine slides={SLIDES} />
+  return <SlideEngine slides={SLIDES} lightMode />
 }
