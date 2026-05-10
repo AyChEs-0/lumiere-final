@@ -3,26 +3,23 @@ import { fadeUp, drawLine, ease } from '../../../utils/motion'
 
 const states = [
   { color: '#6b7280', label: 'Lliure' },
-  { color: '#16a34a', label: 'Seleccionada (tu, 8 min)' },
-  { color: '#d97706', label: 'Bloquejada (altre usuari)' },
-  { color: '#d4183d', label: 'Reservada (confirmada)' },
+  { color: '#16a34a', label: 'Seleccionada — tu (8 min)' },
+  { color: '#d97706', label: 'Bloquejada — altre usuari' },
+  { color: '#d4183d', label: 'Reservada — confirmada' },
 ]
 
-const codeTransaction = `DB::transaction(function () use ($data) {
-    // 1. Crear la reserva
+const code = `DB::transaction(function () use ($data) {
     $reserva = Reserva::create([
         'session_id' => $data->sessionId,
         'user_id'    => auth()->id(),
         'total'      => $data->total,
     ]);
 
-    // 2. Associar cada butaca
     foreach ($data->seats as $seatId) {
         ReservaSeat::create([
             'reserva_id' => $reserva->id,
             'seat_id'    => $seatId,
         ]);
-        // 3. Alliberar el lock
         SeatLock::where('seat_id', $seatId)->delete();
     }
 });`
@@ -44,53 +41,46 @@ export default function EquipG3Slide() {
         </div>
 
         <div className="grid grid-cols-2 gap-5">
-          {/* Left: problem + states */}
           <div className="flex flex-col gap-4">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}
+            <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: 0.3, ease }}
-              className="glass rounded-xl p-5 flex flex-col gap-3">
-              <span className="text-[9px] font-black uppercase tracking-[0.18em] text-cinema-red">El problema</span>
-              <p className="text-[12px] text-gray-600 leading-relaxed">
-                Dos usuaris poden clicar la mateixa butaca al mateix moment. Sense control, ambdós confirmarien
-                la compra i tindríem <span className="font-black text-gray-900">overbooking</span>.
+              className="glass rounded-xl p-6 flex flex-col gap-3">
+              <span className="text-[10px] font-black uppercase tracking-[0.18em] text-cinema-red">El problema</span>
+              <p className="text-[14px] text-gray-600 leading-relaxed">
+                Dos usuaris cliquen la mateixa butaca alhora.
+                Sense control → <span className="font-black text-gray-900">overbooking</span>.
               </p>
-              <p className="text-[11px] text-gray-400 italic">
-                Solució: <span className="font-black text-gray-600">seat_locks</span> amb TTL de 8 minuts + DB::transaction al confirmar.
+              <p className="text-[13px] text-gray-400">
+                Solució: <span className="font-black text-gray-600">seat_locks</span> TTL 8 min + DB::transaction al confirmar.
               </p>
             </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}
+            <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: 0.42, ease }}
-              className="glass rounded-xl p-5 flex flex-col gap-3">
-              <span className="text-[9px] font-black uppercase tracking-[0.18em] text-gray-400">Estats del mapa</span>
-              <div className="grid grid-cols-2 gap-2">
+              className="glass rounded-xl p-6 flex flex-col gap-3">
+              <span className="text-[10px] font-black uppercase tracking-[0.18em] text-gray-400">Estats del mapa</span>
+              <div className="flex flex-col gap-2.5">
                 {states.map((s) => (
-                  <div key={s.label} className="flex items-center gap-2">
-                    <span className="w-3 h-3 rounded-sm shrink-0" style={{ background: s.color }} />
-                    <span className="text-[10px] text-gray-600">{s.label}</span>
+                  <div key={s.label} className="flex items-center gap-3">
+                    <span className="w-4 h-4 rounded shrink-0" style={{ background: s.color }} />
+                    <span className="text-[13px] text-gray-600 font-medium">{s.label}</span>
                   </div>
                 ))}
               </div>
             </motion.div>
           </div>
 
-          {/* Right: code */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }}
+          <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.3, ease }}
-            className="glass rounded-xl p-5 flex flex-col gap-3">
-            <span className="text-[9px] font-black uppercase tracking-[0.18em] text-gray-400">
+            className="glass rounded-xl p-6 flex flex-col gap-3">
+            <span className="text-[10px] font-black uppercase tracking-[0.18em] text-gray-400">
               PurchaseService · confirmPurchase()
             </span>
-            <pre className="text-[9.5px] font-mono text-gray-600 leading-relaxed flex-1 overflow-hidden"
-              style={{ background: '#f8f9fa', borderRadius: '0.75rem', padding: '1rem' }}>
-              {codeTransaction}
+            <pre className="text-[10.5px] font-mono text-gray-600 leading-relaxed flex-1"
+              style={{ background: '#f8f9fa', borderRadius: '0.75rem', padding: '1.25rem' }}>
+              {code}
             </pre>
-            <p className="text-[9px] text-gray-400 italic">
-              Si falla qualsevol pas, la BD queda intacta. Tot o res.
-            </p>
+            <p className="text-[11px] text-gray-400 italic">Si falla qualsevol pas → la BD queda intacta.</p>
           </motion.div>
         </div>
 

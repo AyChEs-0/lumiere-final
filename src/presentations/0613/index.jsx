@@ -1,6 +1,5 @@
 import SlideEngine from '../../components/shared/SlideEngine'
 import TitleSlide0613           from './slides/TitleSlide0613'
-import DemoVideoSlide           from './slides/DemoVideoSlide'
 import QueAvaluaSlide           from './slides/QueAvaluaSlide'
 import ArquitecturaMVCSlide     from './slides/ArquitecturaMVCSlide'
 import DecisionsSeguretatSlide  from './slides/DecisionsSeguretatSlide'
@@ -11,21 +10,22 @@ import ReflexioFAQSlide         from './slides/ReflexioFAQSlide'
 import TancamentSlide           from './slides/TancamentSlide'
 import ReflexioCriticaSlide     from './slides/ReflexioCriticaSlide'
 import MilloresFuturesSlide     from './slides/MilloresFuturesSlide'
+import DemoVideoSlide           from './slides/DemoVideoSlide'
 import TancamentFinalSlide      from './slides/TancamentFinalSlide'
 
 const SLIDES = [
   TitleSlide0613,          // 1  Portada
-  DemoVideoSlide,          // 2  Demo Video
-  QueAvaluaSlide,          // 3  Visió Tècnica
-  ArquitecturaMVCSlide,    // 4  Estructura Carpetes
-  DecisionsSeguretatSlide, // 5  Rols i Middlewares
-  FluxPeticioSlide,        // 6  Controladors
-  PHPvsLaravelSlide,       // 7  Serveis
-  EquipG3Slide,            // 8  Butaques i Concurrència (amb codi)
-  ReflexioFAQSlide,        // 9  Models i Relacions
-  TancamentSlide,          // 10 Serveis Externs
-  ReflexioCriticaSlide,    // 11 Reflexió Crítica
-  MilloresFuturesSlide,    // 12 Millores Futures
+  QueAvaluaSlide,          // 2  Visió Tècnica
+  ArquitecturaMVCSlide,    // 3  Estructura Carpetes
+  DecisionsSeguretatSlide, // 4  Rols i Middlewares
+  FluxPeticioSlide,        // 5  Controladors
+  PHPvsLaravelSlide,       // 6  Serveis
+  EquipG3Slide,            // 7  Butaques i Concurrència
+  ReflexioFAQSlide,        // 8  Models i Relacions
+  TancamentSlide,          // 9  Serveis Externs
+  ReflexioCriticaSlide,    // 10 Reflexió Crítica
+  MilloresFuturesSlide,    // 11 Millores Futures
+  DemoVideoSlide,          // 12 Demo Video (al final)
   TancamentFinalSlide,     // 13 Tancament
 ]
 

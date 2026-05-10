@@ -5,17 +5,17 @@ const decisions = [
   {
     color: '#0891b2',
     q: 'Per que reserva_seats en lloc de CSV?',
-    a: 'El CSV necessitava SQL raw amb FIND_IN_SET, no usava índexs i era difícil de mantenir. La taula normalitzada permet queries netes, integritat referencial i JOINs reals.',
+    a: 'El CSV necessitava FIND_IN_SET, no usava índexs i era difícil de mantenir. La taula normalitzada permet queries netes i integritat referencial.',
   },
   {
     color: '#9333ea',
     q: 'Per que índex únic (nombre, ciudad) a cines?',
-    a: 'El sync TMDB s\'executa cada 6 hores. Sense l\'índex únic podia crear el mateix cine dues vegades si fallava a meitat. L\'índex és la garantia contra duplicats.',
+    a: 'El sync TMDB s\'executa cada 6 hores. Sense l\'índex únic podia crear el mateix cine dues vegades si fallava a meitat.',
   },
   {
     color: '#16a34a',
     q: 'Per que fk_usuario_id nullable a reserves?',
-    a: 'Per permetre la compra sense registre (guest checkout). La reserva existeix amb les butaques i el pagament, però sense usuari associat. Nom i email es guarden directament a la reserva.',
+    a: 'Per permetre la compra sense registre. La reserva existeix amb butaques i pagament, però sense usuari associat.',
   },
 ]
 
@@ -44,19 +44,19 @@ export default function ReflexioFAQSlide() {
         </div>
 
         <div className="grid grid-cols-[auto_1fr] gap-6 items-start">
-          <motion.div {...fadeUp(0.3)} className="glass rounded-xl p-6 shrink-0">
-            <span className="text-[9px] font-black uppercase tracking-[0.18em] text-gray-400 block mb-3">Relacions</span>
-            <pre className="text-[11px] font-mono text-gray-700 leading-relaxed whitespace-pre">{diagram}</pre>
+          <motion.div {...fadeUp(0.3)} className="glass rounded-xl p-7 shrink-0">
+            <span className="text-[10px] font-black uppercase tracking-[0.18em] text-gray-400 block mb-4">Relacions</span>
+            <pre className="text-[13px] font-mono text-gray-700 leading-loose whitespace-pre">{diagram}</pre>
           </motion.div>
 
           <motion.div variants={staggerContainer(0.09, 0.3)} initial="initial" animate="animate"
-            className="flex flex-col gap-3">
+            className="flex flex-col gap-4">
             {decisions.map((d) => (
               <motion.div key={d.q} variants={staggerItem}
-                className="glass rounded-xl p-5 flex flex-col gap-2"
-                style={{ borderLeft: `3px solid ${d.color}` }}>
-                <p className="text-[12px] font-black text-gray-800">{d.q}</p>
-                <p className="text-[11px] text-gray-500 leading-relaxed">{d.a}</p>
+                className="glass rounded-xl p-6 flex flex-col gap-2"
+                style={{ borderLeft: `4px solid ${d.color}` }}>
+                <p className="text-[14px] font-black text-gray-800">{d.q}</p>
+                <p className="text-[13px] text-gray-500 leading-relaxed">{d.a}</p>
               </motion.div>
             ))}
           </motion.div>

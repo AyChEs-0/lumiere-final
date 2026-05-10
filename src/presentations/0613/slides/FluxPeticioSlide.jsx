@@ -6,38 +6,38 @@ const controllers = [
     name: 'CompraController',
     color: '#d4183d',
     accent: true,
-    desc: 'Gestiona el flux de compra en 3 passos. Coordina SeatLock, PurchaseService i la validació de concurrència.',
+    desc: 'Flux de compra en 3 passos. Coordina SeatLock, PurchaseService i validació de concurrència.',
     methods: ['step1()', 'step2()', 'step3Store()'],
   },
   {
     name: 'PeliculaController',
     color: '#0891b2',
-    desc: 'Cartelera pública i CRUD d\'administració. Integra CachedMovieService per obtenir dades de TMDB amb fallback.',
+    desc: 'Cartelera pública i CRUD admin. Integra CachedMovieService amb fallback a BD local.',
     methods: ['index()', 'show()', 'syncTmdb()'],
   },
   {
     name: 'SeatLockController',
     color: '#9333ea',
-    desc: 'API AJAX per l\'estat de les butaques en temps real. Retorna JSON: reserved · locked · mine.',
+    desc: 'API AJAX d\'estat de butaques en temps real. Retorna JSON: reserved · locked · mine.',
     methods: ['status()', 'lock()', 'release()'],
   },
   {
     name: 'AdminCineController',
     color: '#d97706',
-    desc: 'CRUD de cines i sales. Valida amb FormRequest i gestiona relacions Eloquent cine → sala → sessió.',
+    desc: 'CRUD de cines i sales. Valida amb FormRequest, relacions Eloquent cine → sala → sessió.',
     methods: ['index()', 'store()', 'update()', 'destroy()'],
   },
   {
     name: 'HomeController',
     color: '#16a34a',
-    desc: 'Cartelera pública filtrant pel·lícules amb sessions futures. Sense problema N+1.',
+    desc: 'Cartelera pública amb sessions futures. Sense problema N+1.',
     methods: ['index()'],
   },
   {
     name: 'Auth · Breeze',
     color: '#64748b',
-    desc: 'Login, registre, recuperació de contrasenya. Redirecció post-login per rol.',
-    methods: ['gestió nativa Breeze'],
+    desc: 'Login, registre, recuperació de contrasenya. Redirecció per rol post-login.',
+    methods: ['gestió nativa'],
   },
 ]
 
@@ -58,25 +58,21 @@ export default function FluxPeticioSlide() {
         </div>
 
         <motion.div variants={staggerContainer(0.07, 0.2)} initial="initial" animate="animate"
-          className="grid grid-cols-2 gap-3">
+          className="grid grid-cols-2 gap-4">
           {controllers.map((c) => (
             <motion.div key={c.name} variants={staggerItem}
-              className="glass rounded-xl p-5 flex flex-col gap-3"
-              style={c.accent ? { borderColor: `${c.color}25`, boxShadow: `0 0 20px ${c.color}08` } : {}}>
+              className="glass rounded-xl p-6 flex flex-col gap-3"
+              style={c.accent ? { borderColor: `${c.color}30`, boxShadow: `0 0 20px ${c.color}06` } : {}}>
               <div className="flex items-center gap-3">
-                <span className="text-[13px] font-black font-mono" style={{ color: c.color }}>{c.name}</span>
+                <span className="text-[15px] font-black font-mono" style={{ color: c.color }}>{c.name}</span>
                 {c.accent && (
-                  <span className="text-[7px] font-black uppercase tracking-[0.12em] px-2 py-0.5 rounded-full bg-cinema-red/10 text-cinema-red">
-                    principal
-                  </span>
+                  <span className="text-[8px] font-black uppercase tracking-[0.12em] px-2 py-0.5 rounded-full bg-cinema-red/10 text-cinema-red">principal</span>
                 )}
               </div>
-              <p className="text-[11px] text-gray-500 leading-snug">{c.desc}</p>
-              <div className="flex flex-wrap gap-1.5">
+              <p className="text-[13px] text-gray-500 leading-snug">{c.desc}</p>
+              <div className="flex flex-wrap gap-2">
                 {c.methods.map((m) => (
-                  <span key={m} className="text-[9px] font-mono font-black px-2 py-0.5 rounded bg-gray-100 text-gray-500">
-                    {m}
-                  </span>
+                  <span key={m} className="text-[10px] font-mono font-black px-2.5 py-1 rounded-lg bg-gray-100 text-gray-500">{m}</span>
                 ))}
               </div>
             </motion.div>
