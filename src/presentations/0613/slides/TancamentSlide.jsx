@@ -22,9 +22,9 @@ const services = [
   },
   {
     color: '#16a34a',
-    name: 'BaconQrCode',
-    desc: 'QRs SVG amb token HMAC-SHA256(APP_KEY, "reserva:ID"). Impossible de falsificar sense la clau.',
-    why: 'Un UUID seria predecible. HMAC garanteix autenticitat.',
+    name: 'Tailwind CSS',
+    desc: 'Framework CSS utility-first. Tot l\'estil de la interfície: cartelera, formularis, mapa de butaques i panell admin.',
+    why: 'Disseny consistent i ràpid sense CSS personalitzat. Cap conflicte entre estils.',
   },
 ]
 
