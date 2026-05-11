@@ -11,7 +11,7 @@ const improvements = [
   {
     color: '#0891b2',
     title: 'PDF amb QR adjunt al correu',
-    now: 'El QR HMAC-SHA256 es genera en SVG correctament. El correu l\'envia com a imatge solta.',
+    now: 'El QR es genera però no s\'arriba a mostrar correctament. La integració al correu va quedar pendent.',
     why: 'Un PDF ben maquettat requeria DomPDF + plantilla Blade addicional.',
   },
   {
