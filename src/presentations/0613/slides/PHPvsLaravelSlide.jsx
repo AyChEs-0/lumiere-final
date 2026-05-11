@@ -44,7 +44,7 @@ export default function PHPvsLaravelSlide() {
           </div>
         </div>
 
-        <motion.p {...fadeUp(0.28)} className="text-[15px] text-gray-500 mb-7 leading-relaxed max-w-2xl">
+        <motion.p {...fadeUp(0.28)} className="text-[19px] text-gray-500 mb-7 leading-relaxed max-w-2xl">
           Quan la lògica d'un controlador creix massa, la movem a un Servei.
           Controladors llegibles, lògica testejable.
         </motion.p>
@@ -55,9 +55,9 @@ export default function PHPvsLaravelSlide() {
             <motion.div key={s.name} variants={staggerItem}
               className="glass rounded-xl p-7 flex flex-col gap-3"
               style={{ borderLeft: `4px solid ${s.color}` }}>
-              <span className="text-[16px] font-black font-mono" style={{ color: s.color }}>{s.name}</span>
-              <p className="text-[13px] text-gray-600 leading-relaxed">{s.desc}</p>
-              <p className="text-[11px] text-gray-400 italic">{s.why}</p>
+              <span className="text-[20px] font-black font-mono" style={{ color: s.color }}>{s.name}</span>
+              <p className="text-[16px] text-gray-600 leading-relaxed">{s.desc}</p>
+              <p className="text-[14px] text-gray-400 italic">{s.why}</p>
             </motion.div>
           ))}
         </motion.div>

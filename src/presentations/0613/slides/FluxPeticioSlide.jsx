@@ -64,15 +64,15 @@ export default function FluxPeticioSlide() {
               className="glass rounded-xl p-6 flex flex-col gap-3"
               style={c.accent ? { borderColor: `${c.color}30`, boxShadow: `0 0 20px ${c.color}06` } : {}}>
               <div className="flex items-center gap-3">
-                <span className="text-[15px] font-black font-mono" style={{ color: c.color }}>{c.name}</span>
+                <span className="text-[19px] font-black font-mono" style={{ color: c.color }}>{c.name}</span>
                 {c.accent && (
-                  <span className="text-[8px] font-black uppercase tracking-[0.12em] px-2 py-0.5 rounded-full bg-cinema-red/10 text-cinema-red">principal</span>
+                  <span className="text-[10px] font-black uppercase tracking-[0.12em] px-2 py-0.5 rounded-full bg-cinema-red/10 text-cinema-red">principal</span>
                 )}
               </div>
-              <p className="text-[13px] text-gray-500 leading-snug">{c.desc}</p>
+              <p className="text-[16px] text-gray-500 leading-snug">{c.desc}</p>
               <div className="flex flex-wrap gap-2">
                 {c.methods.map((m) => (
-                  <span key={m} className="text-[10px] font-mono font-black px-2.5 py-1 rounded-lg bg-gray-100 text-gray-500">{m}</span>
+                  <span key={m} className="text-[13px] font-mono font-black px-2.5 py-1 rounded-lg bg-gray-100 text-gray-500">{m}</span>
                 ))}
               </div>
             </motion.div>

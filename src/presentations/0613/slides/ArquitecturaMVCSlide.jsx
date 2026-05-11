@@ -56,18 +56,18 @@ export default function ArquitecturaMVCSlide() {
               style={{ borderLeft: `4px solid ${l.color}` }}>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-3 mb-2">
-                  <span className="text-[15px] font-black text-gray-900 font-mono">{l.label}</span>
-                  <span className="text-[9px] font-black uppercase tracking-[0.14em] px-2 py-0.5 rounded-full"
+                  <span className="text-[19px] font-black text-gray-900 font-mono">{l.label}</span>
+                  <span className="text-[11px] font-black uppercase tracking-[0.14em] px-2 py-0.5 rounded-full"
                     style={{ background: `${l.color}12`, color: l.color }}>{l.sub}</span>
                 </div>
-                <p className="text-[13px] text-gray-500 leading-snug mb-2">{l.desc}</p>
-                <p className="text-[11px] font-mono text-gray-400">{l.example}</p>
+                <p className="text-[16px] text-gray-500 leading-snug mb-2">{l.desc}</p>
+                <p className="text-[14px] font-mono text-gray-400">{l.example}</p>
               </div>
             </motion.div>
           ))}
         </motion.div>
 
-        <motion.p {...fadeUp(0.75)} className="text-center text-[13px] text-gray-400 italic mt-6">
+        <motion.p {...fadeUp(0.75)} className="text-center text-[16px] text-gray-400 italic mt-6">
           Cada carpeta té una sola responsabilitat — si falla alguna cosa, sabem exactament on buscar.
         </motion.p>
 

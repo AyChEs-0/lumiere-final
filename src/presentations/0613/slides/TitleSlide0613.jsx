@@ -56,12 +56,12 @@ export default function TitleSlide0613() {
                 style={{ background: `${m.color}15`, border: `2px solid ${m.color}30`, color: m.color }}>
                 {m.initials}
               </div>
-              <span className="text-[10px] text-gray-400 font-medium">{m.name}</span>
+              <span className="text-[13px] text-gray-400 font-medium">{m.name}</span>
             </motion.div>
           ))}
         </motion.div>
 
-        <motion.p {...fadeUp(1.1)} className="text-[9px] uppercase tracking-[0.22em] text-gray-300 mt-8">
+        <motion.p {...fadeUp(1.1)} className="text-[11px] uppercase tracking-[0.22em] text-gray-300 mt-8">
           Equip G3 · Institut F. Vidal i Barraquer · 2025–2026
         </motion.p>
       </div>

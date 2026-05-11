@@ -44,7 +44,7 @@ export default function MilloresFuturesSlide() {
           </div>
         </div>
 
-        <motion.p {...fadeUp(0.25)} className="text-[13px] text-gray-400 italic mb-6">
+        <motion.p {...fadeUp(0.25)} className="text-[16px] text-gray-400 italic mb-6">
           No per falta de ganes — per falta de temps.
         </motion.p>
 
@@ -54,11 +54,11 @@ export default function MilloresFuturesSlide() {
             <motion.div key={imp.title} variants={staggerItem}
               className="glass rounded-xl p-7 flex flex-col gap-3"
               style={{ borderLeft: `4px solid ${imp.color}` }}>
-              <span className="text-[15px] font-black text-gray-900">{imp.title}</span>
-              <p className="text-[13px] text-gray-500 leading-snug">
+              <span className="text-[19px] font-black text-gray-900">{imp.title}</span>
+              <p className="text-[16px] text-gray-500 leading-snug">
                 <span className="font-black text-gray-700">Ara: </span>{imp.now}
               </p>
-              <p className="text-[12px] text-gray-400">
+              <p className="text-[15px] text-gray-400">
                 <span className="font-black" style={{ color: imp.color }}>Per que no: </span>{imp.why}
               </p>
             </motion.div>

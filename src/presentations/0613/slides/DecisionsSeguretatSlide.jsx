@@ -41,16 +41,16 @@ export default function DecisionsSeguretatSlide() {
         <motion.div {...fadeUp(0.28)} className="glass rounded-xl overflow-hidden mb-6">
           <div className="grid grid-cols-3 px-7 py-3 bg-gray-50/80 border-b border-gray-100">
             {['Rol', 'Accés', 'Com s\'assigna'].map((h) => (
-              <span key={h} className="text-[10px] font-black uppercase tracking-[0.18em] text-gray-400">{h}</span>
+              <span key={h} className="text-[13px] font-black uppercase tracking-[0.18em] text-gray-400">{h}</span>
             ))}
           </div>
           <motion.div variants={staggerContainer(0.07, 0.3)} initial="initial" animate="animate">
             {roles.map((r, i) => (
               <motion.div key={r.rol} variants={staggerItem}
                 className={`grid grid-cols-3 px-7 py-4 ${i < roles.length - 1 ? 'border-b border-gray-100' : ''}`}>
-                <span className="text-[15px] font-black font-mono" style={{ color: r.color }}>{r.rol}</span>
-                <span className="text-[14px] text-gray-700">{r.access}</span>
-                <span className="text-[13px] text-gray-400">{r.how}</span>
+                <span className="text-[19px] font-black font-mono" style={{ color: r.color }}>{r.rol}</span>
+                <span className="text-[17px] text-gray-700">{r.access}</span>
+                <span className="text-[16px] text-gray-400">{r.how}</span>
               </motion.div>
             ))}
           </motion.div>
@@ -62,9 +62,9 @@ export default function DecisionsSeguretatSlide() {
               initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.5 + i * 0.1, ease }}
               className="glass rounded-xl p-6 flex flex-col gap-3">
-              <span className="text-[15px] font-black font-mono" style={{ color: m.color }}>{m.name}</span>
-              <p className="text-[13px] text-gray-500 leading-relaxed">{m.desc}</p>
-              <pre className="text-[10px] font-mono text-gray-500 rounded-xl p-4 leading-relaxed"
+              <span className="text-[19px] font-black font-mono" style={{ color: m.color }}>{m.name}</span>
+              <p className="text-[16px] text-gray-500 leading-relaxed">{m.desc}</p>
+              <pre className="text-[13px] font-mono text-gray-500 rounded-xl p-4 leading-relaxed"
                 style={{ background: '#f3f4f6' }}>{m.code}</pre>
             </motion.div>
           ))}

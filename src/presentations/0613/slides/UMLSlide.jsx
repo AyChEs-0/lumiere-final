@@ -9,8 +9,8 @@ function UMLImage() {
     return (
       <div className="flex-1 flex items-center justify-center rounded-2xl border-2 border-dashed border-gray-200">
         <div className="text-center">
-          <p className="text-[13px] font-black text-gray-400">Coloca la imatge aquí:</p>
-          <p className="text-[12px] font-mono text-cinema-red mt-1">public/images/0613/uml.png</p>
+          <p className="text-[16px] font-black text-gray-400">Coloca la imatge aquí:</p>
+          <p className="text-[15px] font-mono text-cinema-red mt-1">public/images/0613/uml.png</p>
         </div>
       </div>
     )
