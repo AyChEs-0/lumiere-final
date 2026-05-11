@@ -11,6 +11,7 @@ import TancamentSlide           from './slides/TancamentSlide'
 import ReflexioCriticaSlide     from './slides/ReflexioCriticaSlide'
 import MilloresFuturesSlide     from './slides/MilloresFuturesSlide'
 import DemoVideoSlide           from './slides/DemoVideoSlide'
+import QRSlide                  from './slides/QRSlide'
 import TancamentFinalSlide      from './slides/TancamentFinalSlide'
 
 const SLIDES = [
@@ -26,7 +27,8 @@ const SLIDES = [
   ReflexioCriticaSlide,    // 10 Reflexió Crítica
   MilloresFuturesSlide,    // 11 Millores Futures
   DemoVideoSlide,          // 12 Demo Video
-  TancamentFinalSlide,     // 13 Tancament
+  QRSlide,                 // 13 QR App
+  TancamentFinalSlide,     // 14 Tancament
 ]
 
 export default function Presentation0613() {
