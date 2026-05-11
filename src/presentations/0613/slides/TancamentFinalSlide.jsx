@@ -49,7 +49,7 @@ export default function TancamentFinalSlide() {
           <div className="overflow-hidden">
             <motion.h2 {...wipeUp(0.25)}
               className="text-[clamp(4rem,10vw,8rem)] font-black uppercase leading-none text-gray-900">
-              Gracies
+              Gràcies
             </motion.h2>
           </div>
           <div className="overflow-hidden">

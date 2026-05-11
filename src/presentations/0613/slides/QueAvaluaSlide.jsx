@@ -33,12 +33,12 @@ export default function QueAvaluaSlide() {
               <span className="text-gray-900 font-black">Laravel 12</span>.
             </p>
             <p className="text-[17px] text-gray-400">
-              Cartelera · Reserves · Butaques · Rols diferenciats
+              Cartellera · Reserves · Butaques · Rols diferenciats
             </p>
           </motion.div>
 
           <motion.div {...fadeUp(0.38)} className="glass rounded-2xl p-10 flex flex-col gap-5">
-            <span className="text-[13px] font-black uppercase tracking-[0.2em] text-cinema-red">Que hem implementat</span>
+            <span className="text-[13px] font-black uppercase tracking-[0.2em] text-cinema-red">Què hem implementat</span>
             <motion.div variants={staggerContainer(0.09, 0.4)} initial="initial" animate="animate"
               className="flex flex-col gap-4">
               {pills.map((p) => (

@@ -39,7 +39,7 @@ export default function MilloresFuturesSlide() {
           <div className="overflow-hidden">
             <motion.h2 initial={{ y: '110%' }} animate={{ y: 0 }}
               transition={{ duration: 0.7, delay: 0.15, ease }} className="s-title">
-              Que Voliem Fer i No Vam Poder
+              Què Volíem Fer i No Vam Poder
             </motion.h2>
           </div>
         </div>
@@ -59,7 +59,7 @@ export default function MilloresFuturesSlide() {
                 <span className="font-black text-gray-700">Ara: </span>{imp.now}
               </p>
               <p className="text-[15px] text-gray-400">
-                <span className="font-black" style={{ color: imp.color }}>Per que no: </span>{imp.why}
+                <span className="font-black" style={{ color: imp.color }}>Per què no: </span>{imp.why}
               </p>
             </motion.div>
           ))}

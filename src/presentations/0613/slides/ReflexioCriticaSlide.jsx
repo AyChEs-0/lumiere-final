@@ -26,7 +26,7 @@ export default function ReflexioCriticaSlide() {
           <div className="overflow-hidden">
             <motion.h2 initial={{ y: '110%' }} animate={{ y: 0 }}
               transition={{ duration: 0.7, delay: 0.15, ease }} className="s-title">
-              Que hem Après
+              Què hem Après
             </motion.h2>
           </div>
         </div>
@@ -38,7 +38,7 @@ export default function ReflexioCriticaSlide() {
               <svg className="w-5 h-5 text-[#16a34a]" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
-              <span className="text-[15px] font-black uppercase tracking-[0.18em] text-[#16a34a]">Que va funcionar</span>
+              <span className="text-[15px] font-black uppercase tracking-[0.18em] text-[#16a34a]">Què va funcionar</span>
             </div>
             <motion.ul variants={staggerContainer(0.1, 0.35)} initial="initial" animate="animate"
               className="flex flex-col gap-4">
@@ -60,7 +60,7 @@ export default function ReflexioCriticaSlide() {
               <svg className="w-5 h-5 text-[#d97706]" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
               </svg>
-              <span className="text-[15px] font-black uppercase tracking-[0.18em] text-[#d97706]">Que millorariem</span>
+              <span className="text-[15px] font-black uppercase tracking-[0.18em] text-[#d97706]">Què milloraríem</span>
             </div>
             <motion.ul variants={staggerContainer(0.1, 0.4)} initial="initial" animate="animate"
               className="flex flex-col gap-4">
