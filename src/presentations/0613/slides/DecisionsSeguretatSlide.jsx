@@ -33,7 +33,7 @@ export default function DecisionsSeguretatSlide() {
           <div className="overflow-hidden">
             <motion.h2 initial={{ y: '110%' }} animate={{ y: 0 }}
               transition={{ duration: 0.7, delay: 0.15, ease }} className="s-title">
-              Qui Pot Fer Que i Per Que
+              Qui Pot Fer Què i Per Què
             </motion.h2>
           </div>
         </div>

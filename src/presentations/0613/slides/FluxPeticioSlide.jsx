@@ -12,7 +12,7 @@ const controllers = [
   {
     name: 'PeliculaController',
     color: '#0891b2',
-    desc: 'Cartelera pública i CRUD admin. Integra CachedMovieService amb fallback a BD local.',
+    desc: 'Cartellera pública i CRUD admin. Integra CachedMovieService amb fallback a BD local.',
     methods: ['index()', 'show()', 'syncTmdb()'],
   },
   {
@@ -30,7 +30,7 @@ const controllers = [
   {
     name: 'HomeController',
     color: '#16a34a',
-    desc: 'Cartelera pública amb sessions futures. Sense problema N+1.',
+    desc: 'Cartellera pública amb sessions futures. Sense problema N+1.',
     methods: ['index()'],
   },
   {

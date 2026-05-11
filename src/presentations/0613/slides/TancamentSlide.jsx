@@ -5,7 +5,7 @@ const services = [
   {
     color: '#0891b2',
     name: 'TMDB',
-    desc: 'Cartelera en temps real amb pòsters i sinopsis. Sync cada 6h. Si cau → fallback a BD local.',
+    desc: 'Cartellera en temps real amb pòsters i sinopsis. Sync cada 6h. Si cau → fallback a BD local.',
     why: 'Mantenir manualment el catàleg seria inviable.',
   },
   {
@@ -23,7 +23,7 @@ const services = [
   {
     color: '#16a34a',
     name: 'Tailwind CSS',
-    desc: 'Framework CSS utility-first. Tot l\'estil de la interfície: cartelera, formularis, mapa de butaques i panell admin.',
+    desc: 'Framework CSS utility-first. Tot l\'estil de la interfície: cartellera, formularis, mapa de butaques i panell admin.',
     why: 'Disseny consistent i ràpid sense CSS personalitzat. Cap conflicte entre estils.',
   },
 ]
