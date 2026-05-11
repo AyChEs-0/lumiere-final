@@ -50,9 +50,9 @@ export default function TancamentSlide() {
             <motion.div key={s.name} variants={staggerItem}
               className="glass rounded-xl p-7 flex flex-col gap-3"
               style={{ borderLeft: `4px solid ${s.color}` }}>
-              <span className="text-[17px] font-black" style={{ color: s.color }}>{s.name}</span>
-              <p className="text-[13px] text-gray-600 leading-relaxed">{s.desc}</p>
-              <p className="text-[11px] text-gray-400 italic">{s.why}</p>
+              <span className="text-[21px] font-black" style={{ color: s.color }}>{s.name}</span>
+              <p className="text-[16px] text-gray-600 leading-relaxed">{s.desc}</p>
+              <p className="text-[14px] text-gray-400 italic">{s.why}</p>
             </motion.div>
           ))}
         </motion.div>

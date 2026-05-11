@@ -31,7 +31,7 @@ export default function DemoVideoSlide() {
       </motion.div>
 
       <motion.p {...fadeUp(0.6)}
-        className="mt-4 text-[11px] text-gray-400 italic">
+        className="mt-4 text-[14px] text-gray-400 italic">
         Desplegat a Railway · PHP 8.4 + Laravel 12 + MySQL 8.4
       </motion.p>
     </div>

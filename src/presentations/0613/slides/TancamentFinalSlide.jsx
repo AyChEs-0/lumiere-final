@@ -68,15 +68,15 @@ export default function TancamentFinalSlide() {
         <motion.div {...fadeUp(0.7)} className="flex items-center justify-center gap-10 mb-5">
           {stats.map((s, i) => (
             <div key={s.label} className="flex flex-col items-center gap-1">
-              <span className="text-[2.8rem] font-black leading-none text-gray-900 tabular-nums">
+              <span className="text-[3.4rem] font-black leading-none text-gray-900 tabular-nums">
                 <Counter end={s.end} delay={0.8 + i * 0.12} />
               </span>
-              <span className="text-[8px] font-black uppercase tracking-[0.22em] text-gray-400">{s.label}</span>
+              <span className="text-[10px] font-black uppercase tracking-[0.22em] text-gray-400">{s.label}</span>
             </div>
           ))}
         </motion.div>
 
-        <motion.p {...fadeUp(0.82)} className="text-[13px] text-gray-400 max-w-md mx-auto mb-5">
+        <motion.p {...fadeUp(0.82)} className="text-[16px] text-gray-400 max-w-md mx-auto mb-5">
           Cada decisió tècnica té una raó. Cada servei resol un problema real.
         </motion.p>
 
@@ -90,14 +90,14 @@ export default function TancamentFinalSlide() {
                 style={{ background: `${m.color}15`, border: `2px solid ${m.color}30`, color: m.color }}>
                 {m.initials}
               </div>
-              <span className="text-[10px] text-gray-400 font-medium">{m.name}</span>
+              <span className="text-[13px] text-gray-400 font-medium">{m.name}</span>
             </motion.div>
           ))}
         </motion.div>
 
         <motion.div {...fadeUp(1.05)} className="flex justify-center mb-4">
           <Link to="/0616"
-            className="flex items-center gap-2 text-[9px] font-black uppercase tracking-[0.14em] text-cinema-red/60
+            className="flex items-center gap-2 text-[11px] font-black uppercase tracking-[0.14em] text-cinema-red/60
                        border border-cinema-red/25 rounded-full px-5 py-2 hover:text-cinema-red hover:border-cinema-red/50 transition-colors duration-200">
             Veure gestió del projecte M0616
             <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
@@ -106,7 +106,7 @@ export default function TancamentFinalSlide() {
           </Link>
         </motion.div>
 
-        <motion.p {...fadeUp(1.2)} className="text-[10px] text-gray-400 italic">
+        <motion.p {...fadeUp(1.2)} className="text-[13px] text-gray-400 italic">
           Obrim torn de preguntes
         </motion.p>
       </div>

@@ -64,17 +64,17 @@
 
   /* Label — small uppercase red text */
   .label {
-    @apply text-[10px] font-black uppercase tracking-[0.22em] text-cinema-red;
+    @apply text-[13px] font-black uppercase tracking-[0.22em] text-cinema-red;
   }
 
   /* Section title */
   .s-title {
-    @apply text-[clamp(2rem,4vw,3.25rem)] font-black uppercase leading-none tracking-[0.04em] text-white;
+    @apply text-[clamp(2.5rem,5vw,4rem)] font-black uppercase leading-none tracking-[0.04em] text-white;
   }
 
   /* Body text */
   .s-body {
-    @apply text-[clamp(0.8rem,1.2vw,1rem)] text-white/50 leading-relaxed;
+    @apply text-[clamp(1rem,1.5vw,1.25rem)] text-white/50 leading-relaxed;
   }
 
   .red-bar {
