@@ -7,7 +7,6 @@ import FluxPeticioSlide         from './slides/FluxPeticioSlide'
 import PHPvsLaravelSlide        from './slides/PHPvsLaravelSlide'
 import EquipG3Slide             from './slides/EquipG3Slide'
 import UMLSlide                 from './slides/UMLSlide'
-import ReflexioFAQSlide         from './slides/ReflexioFAQSlide'
 import TancamentSlide           from './slides/TancamentSlide'
 import ReflexioCriticaSlide     from './slides/ReflexioCriticaSlide'
 import MilloresFuturesSlide     from './slides/MilloresFuturesSlide'
@@ -23,12 +22,11 @@ const SLIDES = [
   PHPvsLaravelSlide,       // 6  Serveis
   EquipG3Slide,            // 7  Butaques i Concurrència
   UMLSlide,                // 8  Esquema BD (UML)
-  ReflexioFAQSlide,        // 9  Decisions de Disseny BD
-  TancamentSlide,          // 10 Serveis Externs
-  ReflexioCriticaSlide,    // 11 Reflexió Crítica
-  MilloresFuturesSlide,    // 12 Millores Futures
-  DemoVideoSlide,          // 13 Demo Video
-  TancamentFinalSlide,     // 14 Tancament
+  TancamentSlide,          // 9  Serveis Externs
+  ReflexioCriticaSlide,    // 10 Reflexió Crítica
+  MilloresFuturesSlide,    // 11 Millores Futures
+  DemoVideoSlide,          // 12 Demo Video
+  TancamentFinalSlide,     // 13 Tancament
 ]
 
 export default function Presentation0613() {
